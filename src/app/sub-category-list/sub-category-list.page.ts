@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseUI } from '../common/baseui';
 import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -21,7 +21,7 @@ export class SubCategoryListPage extends BaseUI {
 
   constructor(public navCtrl: NavController,
     public rest: RestService,
-    public network: Network,
+    public networkService: NetworkService,
     public loadingCtrl: LoadingController,
     public translateService: TranslateService,
     public toastCtrl: ToastController,
@@ -35,8 +35,9 @@ export class SubCategoryListPage extends BaseUI {
     this.loadSecondProductCategory();
   }
 
-  loadSecondProductCategory() {
-    if (this.network.type != 'none') {
+  async loadSecondProductCategory() {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       this.rest.GetProductSecondCategory(this.MainReferenceId) // 填写url的参数
         .subscribe(
           f => {

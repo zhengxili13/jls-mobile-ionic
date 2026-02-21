@@ -3,7 +3,7 @@ import { BaseUI } from '../common/baseui';
 import { environment } from 'src/environments/environment';
 import { RestService } from '../service/rest.service';
 import { NavController, ToastController, LoadingController } from '@ionic/angular';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -35,7 +35,7 @@ export class ReadOrderDetailsPage extends BaseUI {
   constructor(
     public navCtrl: NavController,
     public rest: RestService,
-    public network: Network,
+    public networkService: NetworkService,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
     public translateService: TranslateService,
@@ -51,7 +51,8 @@ export class ReadOrderDetailsPage extends BaseUI {
 
 
   async loadOrderDetail() {
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
 
       var loading = await this.showLoading(this.loadingCtrl, this.translateService.instant("Loading"));
       this.rest.GetOrdersListByOrderId(this.OrderId) // 填写url的参数

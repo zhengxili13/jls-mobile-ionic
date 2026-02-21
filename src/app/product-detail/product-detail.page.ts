@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BaseUI } from '../common/baseui';
 import { UtilsService } from '../service/utils.service';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
@@ -31,7 +31,7 @@ export class ProductDetailPage extends BaseUI {
     public storage: Storage,
     public utils: UtilsService,
     public rest: RestService,
-    public network: Network,
+    public networkService: NetworkService,
     public toastCtrl: ToastController,
     public router: ActivatedRoute,
     public cartService: CartService) {
@@ -46,10 +46,11 @@ export class ProductDetailPage extends BaseUI {
     this.initLoadData();
   }
 
-  addProductIntoFavoriteList() {
+  async addProductIntoFavoriteList() {
     if (this.logined) {
       this.isFavorite = !this.isFavorite;
-      if (this.network.type != 'none') {
+      const status = await this.networkService.getStatus();
+      if (status.connected) {
 
         this.rest.AddIntoProductFavoriteList({
           UserId: localStorage.getItem('userId'),

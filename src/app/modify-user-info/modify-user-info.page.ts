@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BaseUI } from '../common/baseui';
 import { NavController, ToastController, LoadingController } from '@ionic/angular';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { AddressService } from '../service/address.service';
@@ -26,7 +26,7 @@ export class ModifyUserInfoPage extends BaseUI {
     public formBuilder: FormBuilder,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
-    public network: Network,
+    public networkService: NetworkService,
     public rest: RestService,
     public translateService: TranslateService,
     public router: ActivatedRoute,
@@ -110,7 +110,8 @@ export class ModifyUserInfoPage extends BaseUI {
     if (this.userForm.invalid) {
       return;
     }
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       console.log(this.userForm.value);
       var criteria = this.userForm.value;
       criteria.UserId = localStorage.getItem('userId');

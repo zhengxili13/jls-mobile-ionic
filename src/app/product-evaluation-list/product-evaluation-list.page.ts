@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BaseUI } from '../common/baseui';
 import { NavController, ToastController } from '@ionic/angular';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { RestService } from '../service/rest.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
@@ -23,7 +23,7 @@ export class ProductEvaluationListPage extends BaseUI {
   constructor(
     public navCtrl: NavController,
     public toastCtrl: ToastController,
-    public network: Network,
+    public networkService: NetworkService,
     public rest: RestService,
     public translateServce: TranslateService,
     public router: ActivatedRoute
@@ -81,8 +81,9 @@ export class ProductEvaluationListPage extends BaseUI {
       );
   }
 
-  doInfinite(infiniteScroll) {
-    if (this.network.type != 'none') {
+  async doInfinite(infiniteScroll) {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var criteria = null;
       this.counter = this.counter + 1;
       switch (this.type) {

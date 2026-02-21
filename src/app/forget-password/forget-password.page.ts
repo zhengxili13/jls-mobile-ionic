@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseUI } from '../common/baseui';
 import { NavController, ToastController, LoadingController } from '@ionic/angular';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -16,7 +16,7 @@ export class ForgetPasswordPage  extends BaseUI {
   constructor(
     public navCtrl: NavController, 
     private rest : RestService, 
-    public network: Network,
+    public networkService: NetworkService,
     public toastCtrl: ToastController ,
     public translateService : TranslateService,
     public loadingCtrl: LoadingController
@@ -30,7 +30,8 @@ export class ForgetPasswordPage  extends BaseUI {
 
   async sendEmail(){
     if(this.email !=null && this.email!= ''){
-      if (this.network.type != 'none') {
+      const status = await this.networkService.getStatus();
+      if (status.connected) {
         var loading = await this.showLoading(this.loadingCtrl,this.translateService.instant('Loading')); 
 
        // this.navCtrl.parent.select(0); // 跳转tabs

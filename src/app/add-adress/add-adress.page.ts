@@ -3,7 +3,7 @@ import { BaseUI } from '../common/baseui';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NavController, ToastController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { RestService } from '../service/rest.service';
 import { UtilsService } from '../service/utils.service';
 import { Storage } from '@ionic/storage';
@@ -23,7 +23,7 @@ export class AddAdressPage extends BaseUI {
   constructor(
     public navCtrl: NavController,
     public translateService: TranslateService,
-    public network: Network,
+    public networkService: NetworkService,
     public formBuilder: FormBuilder,
     public rest: RestService,
     public toastCtrl: ToastController,
@@ -69,7 +69,8 @@ export class AddAdressPage extends BaseUI {
   }
 
   async loadUserInfo() {
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var loading = await super.showLoading(this.loadingCtrl, this.translateService.instant('Loading'));
       this.rest.GetUserById(await this.utils.getKey('userId')) // 填写url的参数
         .subscribe(
@@ -104,7 +105,8 @@ export class AddAdressPage extends BaseUI {
     if (this.adreeForm.invalid) {
       return;
     }
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var criteria = {
         adress: this.adreeForm.value,
         userId: await this.utils.getKey('userId'),

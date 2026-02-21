@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseUI } from '../common/baseui';
 
@@ -16,7 +16,7 @@ export class CategoryListPage extends BaseUI {
 
   constructor(public navCtrl: NavController,
     public rest: RestService,
-    public network: Network,
+    public networkService: NetworkService,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public translateService: TranslateService) {
@@ -37,8 +37,9 @@ export class CategoryListPage extends BaseUI {
     });
   }
 
-  loadMainCategoryList() {
-    if (this.network.type != 'none') {
+  async loadMainCategoryList() {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       this.rest.GetProductMainCategory() // 填写url的参数
         .subscribe(
           f => {

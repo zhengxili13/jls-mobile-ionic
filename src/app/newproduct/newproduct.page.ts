@@ -5,7 +5,7 @@ import { NavController, ToastController, ModalController } from '@ionic/angular'
 import { RestService } from '../service/rest.service';
 import { UtilsService } from '../service/utils.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AdvancedSearchPage } from '../advanced-search/advanced-search.page';
@@ -50,7 +50,7 @@ export class NewproductPage extends BaseUI {
   constructor(
     public router: ActivatedRoute,
     public navCtrl: NavController,
-    public network: Network,
+    public networkService: NetworkService,
     public rest: RestService,
     public toastCtrl: ToastController,
     public storage: Storage,
@@ -314,8 +314,9 @@ export class NewproductPage extends BaseUI {
     }
   }
 
-  doInfinite(infiniteScroll) {
-    if (this.network.type != 'none') {
+  async doInfinite(infiniteScroll) {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       this.counter = this.counter + 1;
       switch (this.PageType) {
         case 'BySecondCategory':

@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@awesome-cordova-plugins//splash-screen/ngx';
-import { StatusBar } from '@awesome-cordova-plugins//status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +12,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UtilsService } from './service/utils.service';
 import { RestService } from './service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -32,7 +29,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { CartService } from './service/cart.service';
 import { AddressService } from './service/address.service';
-import { CodePush } from '@awesome-cordova-plugins//code-push/ngx';
 import { SwiperModule } from 'swiper/angular';
 
 export function LanguageLoader(http: HttpClient) {
@@ -68,16 +64,12 @@ export function LanguageLoader(http: HttpClient) {
     TranslationPageModule
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     UtilsService,
     RestService,
-    Network,
     CartService,
-    AddressService,
-    CodePush
+    AddressService
   ],
   bootstrap: [AppComponent]
 })

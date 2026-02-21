@@ -4,7 +4,7 @@ import { NavController, ToastController, LoadingController } from '@ionic/angula
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { distinctUntilChanged, debounceTime, switchMap, map, first } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -24,7 +24,7 @@ export class RegistrePage extends BaseUI {
     public translateService: TranslateService,
     public formBuilder: FormBuilder,
     public rest: RestService,
-    public network: Network,
+    public networkService: NetworkService,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController) {
     super();
@@ -106,7 +106,8 @@ export class RegistrePage extends BaseUI {
         FacturationAdress: this.addressForm.value,
         ShipmentAdress: this.addressForm.value
       }
-      if (this.network.type != 'none') {
+      const status = await this.networkService.getStatus();
+      if (status.connected) {
         var loading = await this.showLoading(this.loadingCtrl, this.translateService.instant('Loading'));
         this.rest.Registre(registreInfo) // 填写url的参数
           .subscribe(

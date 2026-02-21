@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { LoadingController, ToastController, NavController } from '@ionic/angular';
 import { UtilsService } from '../service/utils.service';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { ActivatedRoute } from '@angular/router';
 import { AddressService } from '../service/address.service';
 import { Iaddress } from '../interface/iaddress';
@@ -24,7 +24,7 @@ export class SelectShippingAdressPage extends BaseUI {
 
   constructor(
     public navCtrl: NavController,
-    public network: Network,
+    public networkService: NetworkService,
     public toastCtrl: ToastController,
     public rest: RestService,
     public utils: UtilsService,
@@ -59,7 +59,8 @@ export class SelectShippingAdressPage extends BaseUI {
 
     this.previousPage = this.router.snapshot.queryParams['CurrentPage'];
 
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var loading = await super.showLoading(this.loadingCtrl, this.translateService.instant("Loading"));
       var userId = await this.utils.getKey('userId');
       this.rest.GetUserShippingAdress(userId) // 填写url的参数

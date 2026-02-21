@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { NavController, ToastController } from '@ionic/angular';
 import { UtilsService } from '../service/utils.service';
 import { Storage } from '@ionic/storage';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { RestService } from '../service/rest.service';
 import { TranslateService } from '@ngx-translate/core';
 import { CartService } from '../service/cart.service';
@@ -25,7 +25,7 @@ export class CartPage extends BaseUI {
     public navCtrl: NavController,
     public utils: UtilsService,
     public storage: Storage,
-    public network: Network,
+    public networkService: NetworkService,
     public rest: RestService,
     public toastCtrl: ToastController,
     public translateService: TranslateService,

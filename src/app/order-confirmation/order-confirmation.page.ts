@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { UtilsService } from '../service/utils.service';
 import { Storage } from '@ionic/storage';
 import { NavController, ToastController, LoadingController, AlertController, ModalController } from '@ionic/angular';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { RestService } from '../service/rest.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseUI } from '../common/baseui';
@@ -39,7 +39,7 @@ export class OrderConfirmationPage extends BaseUI {
     public navCtrl: NavController,
     public utils: UtilsService,
     public storage: Storage,
-    public network: Network,
+    public networkService: NetworkService,
     public rest: RestService,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
@@ -103,7 +103,8 @@ export class OrderConfirmationPage extends BaseUI {
 
 
   async ngOnInit() {
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var loading = await super.showLoading(this.loadingCtrl, this.translateService.instant("Loading"));
       var UserId = localStorage.getItem('userId'); //await this.utils.getKey('userId');
 
@@ -227,7 +228,8 @@ export class OrderConfirmationPage extends BaseUI {
 
     var UserId = Number.parseInt(await this.utils.getKey('userId'));
     if (productInfo.length > 0 && shippingAdressId != null) {
-      if (this.network.type != 'none') {
+      const status = await this.networkService.getStatus();
+      if (status.connected) {
         var loading = await super.showLoading(this.loadingCtrl, this.translateService.instant("Loading"));
         this.rest.SaveOrder(productInfo, shippingAdressId, facturationAdressId, UserId, this.remark) // 填写url的参数
           .subscribe(

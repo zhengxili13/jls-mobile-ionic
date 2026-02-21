@@ -1,7 +1,9 @@
 android:
-sudo ionic cordova prepare android --prod
-sudo appcenter codepush release-cordova -a jlsimport.apple-gmail.com/JLS-MOBILE-ANDROID -d Production -m
+ng build --configuration=production
+npx cap sync android
+# For Code Push / OTA updates with Capacitor, use a Capacitor-compatible solution (e.g. App Center SDK or a community plugin).
 
 ios:
-sudo ionic cordova prepare ios --prod
-sudo appcenter codepush release-cordova -a jlsimport.apple-gmail.com/JLS-MOBILE-IOS -d Production -m
+ng build --configuration=production
+npx cap sync ios
+# For Code Push / OTA updates with Capacitor, use a Capacitor-compatible solution (e.g. App Center SDK or a community plugin).

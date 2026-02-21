@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseUI } from '../common/baseui';
 import { UtilsService } from '../service/utils.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { RestService } from '../service/rest.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,7 +22,7 @@ export class WriteProductEvaluationPage extends BaseUI {
   constructor(
     public navCtrl: NavController,
     public utils: UtilsService,
-    public network: Network,
+    public networkService: NetworkService,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
     public translateService: TranslateService,
@@ -44,7 +44,8 @@ export class WriteProductEvaluationPage extends BaseUI {
         UserId: await this.utils.getKey('userId'),
         ProductId: this.router.snapshot.queryParams['productId']
       }
-      if (this.network.type != 'none') {
+      const status = await this.networkService.getStatus();
+      if (status.connected) {
         var loading = await super.showLoading(this.loadingCtrl, this.translateService.instant('Loading'));
         this.rest.SaveProductComment(criteria)
           .subscribe(

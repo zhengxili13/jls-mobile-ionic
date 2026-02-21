@@ -133,8 +133,8 @@
             }
           }
         },
-        "ionic-cordova-build": {
-          "builder": "@ionic/angular-toolkit:cordova-build",
+        "ionic-capacitor-build": {
+          "builder": "@ionic/angular-toolkit:capacitor-build",
           "options": {
             "buildTarget": "app:build"
           },
@@ -144,15 +144,15 @@
             }
           }
         },
-        "ionic-cordova-serve": {
-          "builder": "@ionic/angular-toolkit:cordova-serve",
+        "ionic-capacitor-serve": {
+          "builder": "@ionic/angular-toolkit:capacitor-serve",
           "options": {
-            "cordovaBuildTarget": "app:ionic-cordova-build",
+            "capacitorBuildTarget": "app:ionic-capacitor-build",
             "devServerTarget": "app:serve"
           },
           "configurations": {
             "production": {
-              "cordovaBuildTarget": "app:ionic-cordova-build:production",
+              "capacitorBuildTarget": "app:ionic-capacitor-build:production",
               "devServerTarget": "app:serve:production"
             }
           }

@@ -3,7 +3,7 @@ import { BaseUI } from '../common/baseui';
 import { NavController, ToastController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 
 @Component({
   selector: 'app-advanced-search',
@@ -36,7 +36,7 @@ export class AdvancedSearchPage extends BaseUI {
   constructor(public navCtrl: NavController,
     public translateService: TranslateService,
     public rest: RestService,
-    public network: Network,
+    public networkService: NetworkService,
     public toastCtrl: ToastController,
     public modalCtrl: ModalController) {
     super();
@@ -51,8 +51,9 @@ export class AdvancedSearchPage extends BaseUI {
   translateOrderByItem(item) {
     return this.translateService.instant('advanced-search.' + item);
   }
-  loadMainCategoryAndSecondCategory() {
-    if (this.network.type != 'none') {
+  async loadMainCategoryAndSecondCategory() {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       this.rest.GetReferenceItemsByCategoryLabels(
         {
           ShortLabels: ['MainCategory', 'SecondCategory'],

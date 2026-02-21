@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseUI } from '../common/baseui';
 import { NavController, LoadingController, ToastController } from '@ionic/angular';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { RestService } from '../service/rest.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
@@ -16,7 +16,7 @@ export class UserInfoPage extends BaseUI {
 
   constructor(
     public navCtrl: NavController,
-    public network: Network,
+    public networkService: NetworkService,
     public rest: RestService,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
@@ -40,7 +40,8 @@ export class UserInfoPage extends BaseUI {
   }
 
   async loadUserinfo() {
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var loading = await super.showLoading(this.loadingCtrl, this.translateService.instant('Loading'));
       this.rest.GetUserById(localStorage.getItem('userId'))
         .subscribe(

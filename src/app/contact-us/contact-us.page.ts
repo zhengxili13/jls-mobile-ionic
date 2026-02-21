@@ -3,7 +3,7 @@ import { BaseUI } from '../common/baseui';
 import { NavController, ToastController, LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -31,7 +31,7 @@ export class ContactUsPage extends BaseUI {
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     public rest: RestService,
-    public network: Network,
+    public networkService: NetworkService,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public router: ActivatedRoute) {
@@ -39,7 +39,7 @@ export class ContactUsPage extends BaseUI {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.rest.GetReferenceItemsByCategoryLabels({
       shortLabels: ['StoreInfomation']
@@ -65,7 +65,8 @@ export class ContactUsPage extends BaseUI {
       this.criteria.Title = SystemMessage.Title;
       this.criteria.Body = SystemMessage.Body;
       this.isSystemMessage = true;
-      if (this.network.type != 'none') {
+      const status = await this.networkService.getStatus();
+      if (status.connected) {
 
         this.rest.UpdateMessageStatus({
           MessageId: SystemMessage.Id,
@@ -94,7 +95,8 @@ export class ContactUsPage extends BaseUI {
     console.log(this.criteria);
 
 
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var loading = await this.showLoading(this.loadingCtrl, this.translateService.instant('Loading'));
 
       var MessageInfo: any = {};

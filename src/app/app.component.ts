@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-import { StatusBar } from '@awesome-cordova-plugins//status-bar/ngx';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 import { RestService } from './service/rest.service';
 import { UtilsService } from './service/utils.service';
@@ -16,7 +17,6 @@ import { Storage } from '@ionic/storage-angular';
 export class AppComponent {
   constructor(
     private platform: Platform,
-    private statusBar: StatusBar,
     private translate: TranslateService,
     private rest: RestService,
     private utils: UtilsService,
@@ -27,8 +27,8 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(async () => {
-
-      this.statusBar.styleDefault();
+      await StatusBar.setStyle({ style: Style.Light });
+      await SplashScreen.hide();
 
       // Set default language 
       var lang = await this.utils.getKey('lang');

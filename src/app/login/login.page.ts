@@ -4,7 +4,7 @@ import { NavController, LoadingController, ToastController, ModalController } fr
 import { RestService } from '../service/rest.service';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { UtilsService } from '../service/utils.service';
 import { environment } from 'src/environments/environment';
 
@@ -24,7 +24,7 @@ export class LoginPage extends BaseUI {
     public toastCtrl: ToastController,
     public storage: Storage,
     public modalCtrl: ModalController,
-    public network: Network,
+    public networkService: NetworkService,
     public translateService: TranslateService,
     public utils: UtilsService
   ) {
@@ -38,7 +38,8 @@ export class LoginPage extends BaseUI {
   async login() {
     // this.viewCtrl.dismiss();
 
-    if (this.network.type != 'none') {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var loading = await this.showLoading(this.loadingCtrl, this.translateService.instant("Loading"));
       var LoginInfo = {
         Email: this.email,

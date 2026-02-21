@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { NavController, ToastController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { RestService } from '../service/rest.service';
-import { Network } from '@awesome-cordova-plugins//network/ngx';
+import { NetworkService } from '../service/network.service';
 import { ContactUsPage } from '../contact-us/contact-us.page';
 import { UtilsService } from '../service/utils.service';
 
@@ -27,7 +27,7 @@ export class NotificationPage extends BaseUI {
     public translateService: TranslateService,
     public toastCtrl: ToastController,
     public rest: RestService,
-    public network: Network,
+    public networkService: NetworkService,
     public modalCtrl: ModalController,
     public utils: UtilsService
 
@@ -46,8 +46,9 @@ export class NotificationPage extends BaseUI {
   }
 
 
-  loadMesage() {
-    if (this.network.type != 'none') {
+  async loadMesage() {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       var criteria = {
         UserId: localStorage.getItem('userId'),
         Step: this.step,
@@ -99,8 +100,9 @@ export class NotificationPage extends BaseUI {
   }
 
 
-  doInfinite(infiniteScroll) {
-    if (this.network.type != 'none') {
+  async doInfinite(infiniteScroll) {
+    const status = await this.networkService.getStatus();
+    if (status.connected) {
       this.counter = this.counter + 1;
       var criteria = {
         UserId: localStorage.getItem('userId'),
