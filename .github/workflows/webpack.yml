@@ -2,8 +2,6 @@ name: CI
 
 on:
   push:
-    branches-ignore:
-      - main        # main 由 CD 处理，CI 覆盖其他所有分支
   pull_request:     # PR 也触发 CI 检查
 
 jobs:
