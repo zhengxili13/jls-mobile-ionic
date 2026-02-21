@@ -1,58 +1,53 @@
-name: Build Android APK
+name: CD
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build Capacitor Android APK
+  deploy:
+    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
 
     steps:
-      # 🛠️ 检出代码
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # 🛠️ 安装 Node.js & npm
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'
+          cache: 'npm'
 
-      # 🛠️ 安装项目依赖
-      - name: Install Dependencies
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      # ⚡ 构建 Ionic 应用
-      - name: Build Ionic App
-        run: npm run build
+      - name: Build
+        run: npm run build -- --configuration=production --base-href=/${{ github.event.repository.name }}/
+        env:
+          NODE_ENV: production
 
-      # 🔹 安装 Capacitor Android 依赖
-      - name: Install Capacitor Android
-        run: |
-          npm install @capacitor/android
-          npx cap sync android
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-      # 🛠️ 设置 Java & Gradle 环境
-      - name: Setup Java & Gradle
-        uses: actions/setup-java@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          distribution: 'temurin' # 推荐使用 Adoptium Temurin JDK
-          java-version: '17' # 你可以改为 11 或 17
+          path: www/
 
-      # 🛠️ 安装 Android SDK
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      # 🛠️ 构建 Android Debug APK
-      - name: Build Android Debug APK
-        run: |
-          cd android
-          ./gradlew assembleDebug
-
-      # 📦 上传 APK 作为构建产物
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: android-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
