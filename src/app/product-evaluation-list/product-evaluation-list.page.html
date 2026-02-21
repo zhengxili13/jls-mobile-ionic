@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'product-evaluation-list.Avis' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="loading" class="spinner" class="ion-text-center ion-margin-top">
+    <ion-spinner class="ion-text-center"></ion-spinner>
+    <p class="ion-text-center" font-size-small>{{'product-evaluation-list.Loading' | translate}}... </p>
+  </div>
+
+  <p *ngIf="!loading && (productCommentList==null || productCommentList.length<=0)" class="ion-text-center">
+    {{'NoDataToDisplay' | translate}}</p>
+  <ion-card *ngFor="let item of productCommentList">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4" col-4>
+
+            <img *ngIf="item.PhotoPath==null" src="assets/imgs/not-found.png">
+
+            <img [src]="host+item.PhotoPath" *ngIf="item.PhotoPath">
+          </ion-col>
+
+          <ion-col size="8" col-8 style="font-size:14px;">
+            <ion-row>
+              <ion-col>{{item.User.EntrepriseName}} {{'product-evaluation-list.alaisseunavis' | translate}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>{{item.Label | uppercase}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <app-star-rating [rating]="item.ProductComment.Level" [readonly]="true" size="13px">
+                </app-star-rating>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    <ion-card-content>
+      <h6 style="font-weight:bold;font-size: initial;color:#000;">{{item.ProductComment.Title}} </h6>
+      <p style="font-size: initial;color:#000;margin-bottom:10px"> {{item.ProductComment.Body}} </p>
+      <p style="text-align: right;">{{item.ProductComment.CreatedOn}} </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

@@ -1,0 +1,31 @@
+<ion-content fullscreen="true">
+  <div class="textZone">
+    <h2> {{'translation.InnerTitle' | translate}}</h2>
+    <div class="selectLangZone">
+      <ion-radio-group [(ngModel)]="selectedLang">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img style="border-radius: 0%!important;" src="assets/imgs/united-states.png">
+          </ion-avatar>
+          <ion-label>{{'en' | translate}} </ion-label>
+          <ion-radio value="en" checked slot="end" color="primary" ></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img style="  border-radius: 0%!important;" src="assets/imgs/france.png">
+          </ion-avatar>
+          <ion-label>{{'fr' | translate}} </ion-label>
+          <ion-radio value="fr" slot="end" color="primary" ></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img style="  border-radius: 0%!important;" src="assets/imgs/china.png">
+          </ion-avatar>
+          <ion-label>{{'cn' | translate}} </ion-label>
+          <ion-radio value="cn" slot="end" color="primary" ></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </div>
+    <ion-button expand="block" class="ion-margin-top" style="border-radius: 10px;" (click)="changeLang()">{{'Ok' | translate}}</ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,31 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="tabHome">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>{{'tabs.Home' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tabDiscovery">
+      <ion-icon name="stats-chart"></ion-icon>
+      <ion-label>{{'tabs.Discover' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tabCart">
+      <ion-icon name="cart"></ion-icon>
+      <ion-label>{{'tabs.Cart' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tabNotification" [disabled]="!IsLogined">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>{{'tabs.Notice' | translate}}</ion-label>
+      <ion-badge *ngIf="MessageCount!=null" >{{MessageCount}}</ion-badge>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tabMyAccount">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>{{'tabs.Account' | translate}}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

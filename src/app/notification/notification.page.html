@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{'notification.notification' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="loading" class="spinner ion-text-center ion-margin-top">
+    <ion-spinner class="ion-text-center"></ion-spinner>
+    <p class="ion-text-center" font-size-small>{{'Loading' | translate}}...</p>
+  </div>
+  <p *ngIf="!loading && (messageList==null || messageList.length<=0) " class="ion-text-center" text-center>{{'NoDataToDisplay' | translate}}</p>
+  <ion-list>
+    <ion-item button *ngFor="let item of messageList" (click)="readDetailInfo(item)">
+      <ion-avatar class="ion-float-left" item-left>
+        <img src="assets/imgs/SystemMessage.jpg">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{'notification.Systemmessage' | translate}} <ion-icon name="eye" style="float: right;"
+            *ngIf="item.IsReaded==null ||item.IsReaded==false"></ion-icon>
+        </h2>
+        <p>{{item.Title}} <span style="float: right;"> {{item.CreatedOn}} </span> </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

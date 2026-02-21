@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{'advanced-search.advancedSearch' | translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button  (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">{{'signin.Return' | translate}}</span>
+        <ion-icon name="md-close" showWhen="android"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  style="background-color: #fff!important;">
+  <div class="headerZoom" style="margin-left:10px; margin-right: 2px;">
+    <h3>{{'advanced-search.Criteresderecherche' | translate}}</h3>
+  </div>
+
+
+  <ion-list>
+    <ion-item>
+      <ion-label stacked>{{'advanced-search.Votrerecherche' | translate}}</ion-label>
+      <ion-input [(ngModel)]="criteria.SearchText" class="inputZoom"
+        placeholder="{{'advanced-search.Motcle' | translate}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{'advanced-search.Categories' | translate}}</ion-label>
+      <ion-select [(ngModel)]="criteria.MainCategory">
+        <ion-select-option [value]="item.Id" *ngFor="let item of MainCategoryList">{{item.Label}}</ion-select-option>
+
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{'advanced-search.SousCategories' | translate}}</ion-label>
+      <ion-select [(ngModel)]="criteria.SecondCategory" multiple="true">
+        <ion-select-option [value]="item.Id" *ngFor="let item of getSecondCategoryList()">{{item.Label}} </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label start slot="start">{{'advanced-search.Minquantitedachat' | translate}}: {{criteria.MinQuantity}}</ion-label>
+      <ion-range [(ngModel)]="criteria.MinQuantity" min="0" max="200" step="10">
+        <ion-icon range-left small name="cube"></ion-icon>
+        <ion-icon range-right name="cube"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label start position="stacked" slot="start">{{'advanced-search.Prix' | translate}}: {{criteria.PriceInterval.lower}} -
+        {{criteria.PriceInterval.upper}} €</ion-label>
+      <ion-range [(ngModel)]="criteria.PriceInterval" min="0" max="200" step="10" dualKnobs="true" pin="true">
+        <ion-icon range-left name="remove"></ion-icon>
+        <ion-icon range-right name="add"></ion-icon>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+  <div class="headerZoom" style="margin-left:10px; margin-right: 2px;">
+    <h3>{{'advanced-search.Prix' | translate}}, {{'advanced-search.Nouveaute' | translate}} , {{'advanced-search.Popularite' | translate}} </h3>
+  </div>
+  <ion-list>
+    <ion-item>
+      <ion-label>{{'advanced-search.Trierpar' | translate}}  </ion-label>
+      <ion-select [(ngModel)]="criteria.OrderBy">
+        <ion-select-option [value]="item" *ngFor="let item of OrderByList">{{ translateOrderByItem(item)}} </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <div text-center>
+    <ion-button color="primary" style="width: 100%; height: 35px;"
+      (click)="search()">{{'advanced-search.Search' | translate}}
+    </ion-button>
+  </div>
+</ion-content>

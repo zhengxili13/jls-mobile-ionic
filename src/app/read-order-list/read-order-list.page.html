@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>{{'readorderlist.Commande' | translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="loading" class="ion-text-center spinner ion-margin-top">
+    <ion-spinner></ion-spinner>
+    <p class="ion-text-center"  font-size-small>{{'Loading' | translate}}...</p>
+  </div>
+  <p *ngIf="!loading && (orderList==null || orderList.length<=0) " class="ion-text-center">{{'NoDataToDisplay' | translate}}</p>
+  <ion-list>
+    <ion-card *ngFor="let item of orderList"> 
+      <ion-card-header class="cardHeader">
+       {{'readorderlist.CommandeNmber' | translate}}: N° {{item.Id}}
+        <ion-badge class="ion-float-right" float-right [color]="getStatusClass(item.StatusCode)" style="color: white;"> {{item.StatusLabel}}</ion-badge>
+      </ion-card-header>
+      <ion-card-content style="padding-bottom: 10px;">
+        <h6 class="descriptionFont">
+          <b> {{'readorderlist.PurchasingDate' | translate}}</b>: {{item.CreatedOn}}
+        </h6>
+        <h6 class="descriptionFont">
+          <b> {{'readorderlist.Total' | translate}}</b>: {{item.TotalPrice | number : '1.2-2'}}€
+        </h6>
+        <h6 class="descriptionFont">
+          <b>{{'readorderlist.Address' | translate}}</b>
+        </h6>
+        <p class="descriptionFont">
+          {{item.ShippingAdress.FirstLineAddress}}
+          <br>
+          {{item.ShippingAdress.ZipCode}} {{item.ShippingAdress.City}}
+        </p>
+        <h6 class="descriptionFont detailInfo" (click)="commandeDetail(item)">{{'readorderlist.Detail' | translate}}</h6>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

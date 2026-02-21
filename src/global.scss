@@ -1,0 +1,91 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+ion-content {
+  //--background: #E5E6E8!important;
+}
+
+.swiper-slide{
+  text-align: center;
+}
+.alert {
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.productCardContent {
+  padding-right: 2px;
+}
+
+.product-card__badge {
+  font-size: 11px;
+  border-radius: 1.5px;
+  letter-spacing: .02em;
+  line-height: 1;
+  padding: 5px 8px 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  margin-right: 4px;
+  background: #f33;
+  color: #fff;
+}
+
+.product-card__badge_New {
+  font-size: 11px;
+  border-radius: 1.5px;
+  letter-spacing: .02em;
+  line-height: 1;
+  padding: 5px 8px 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  margin-right: 4px;
+  background: #614ba6;
+  color: #fff;
+}
+
+.product-card__badges-list {
+  top: 5px;
+  position: absolute;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  z-index: 1;
+  right: 5px;
+}

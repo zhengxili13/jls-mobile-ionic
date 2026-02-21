@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" end>
+      <ion-button (click)="modifyPersonInfo()" [disabled]="UserInfo=={}">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{'user-info.UserInfo' | translate}}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content style="background-color: white!important;">
+  <div class="content-header">
+    <ion-list lines="none">
+      <ion-item style="border: 0px;">
+        <ion-thumbnail item-left slot="start">
+          <img src="assets/imgs/logo-512.png">
+        </ion-thumbnail>
+        <ion-label style="font-size: 1.3em;"> {{UserInfo.Email}} </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div class="content-middle">
+    <ion-row class="buttonRow row" class ="ion-text-center">
+      <ion-col col-4 class="col">
+        <div style="font-size: 1.5em;">
+          {{UserInfo.OrderCount}}
+        </div>
+        <p>{{'user-info.Commandes' | translate}}</p>
+      </ion-col>
+
+      <ion-col col-4 class="col">
+        <div style="font-size: 1.5em;">
+          {{UserInfo.CommentCount}}
+        </div>
+        <p>{{'user-info.Avis' | translate}}</p>
+      </ion-col>
+
+      <ion-col col-4 class="col">
+        <div style="font-size: 1.5em;">
+          {{UserInfo.FavoriteCount}}
+        </div>
+        <p>{{'user-info.Favoris' | translate}}</p>
+      </ion-col>
+
+    </ion-row>
+  </div>
+  <div class="content-footer">
+    <ion-list>
+      <ion-item button (click)="myAvis()">
+        <ion-icon name="star" style="margin-right: 5px;" item-start class="iconStyle"></ion-icon>
+        {{'user-info.Aivssoumis' | translate}}
+      </ion-item>
+      <ion-item button  (click)="myFavorite()">
+        <ion-icon name="bookmark" style="margin-right: 5px;" item-start class="iconStyle"></ion-icon>
+        {{'user-info.ProduitsFavoris' | translate}}
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

@@ -1,0 +1,329 @@
+{
+    "Ok" : "Ok",
+    "en":"English",
+    "fr":"Français",
+    "cn":"中文",
+    "success":"Validé",
+    "refuse":"Refusé",
+    "preparing":"En cour de préparation",
+    "Add":"Ajouter",
+    "NoDataToDisplay": "Pas de donnée",
+    "Loading":"En cours",
+    "required":"obligatoire",
+    "BestSalesProduit":"Meilleur vente",
+    "NewProduit":"Nouveauté",
+    "Promotionproduit":"Promotion",
+    "Meslistes":"Favoris",
+    "Msg_Offline":"Votre réseau n'est pas stable",
+    "Msg_Error":"Une error s'est produit, veuillez réessayer plus tard",
+    "Msg_NotConnected":"Non connecté, connectez-vous pour découvrir.",
+    "Msg_SaveSuccess":"Enregistré avec succès",
+    "Msg_ConfirmLeave":"Est-ce que vous êtes sûr de quitter ce page?",
+    "Msg_OrdePassedSuccess": "Votre commande est bien enregistré, nous allons vous contacter dans un meilleur délai",
+    "Msg_AddInCart": "Ajouté au panier avec succès",
+    "Msg_SelectShippingAddress":"Veuillez sélectionner une adresse de livraison",
+
+    "Msg_AddFavoriteList":"Ajouté à la liste de favoris avec succès",
+    "Msg_RemoveIntoFavoriteList":"Bien supprimé sur votre liste de favoris",
+    "Msg_CantComment":"Si vous souhaitez commenter ce produit, vous devez d'abord l'acheter",
+    "Msg_SomeErrorInForm":"Il y a des erreurs dans les informations que vous avez remplies, veuillez remplir à nouveau",
+   
+    "Msg_Avisenregistre":"Votre avis a été enregistré",
+    "Msg_AccountBloque":"Compte bloqué",
+    "Msg_EmailNotValide":"L'email n'a pas été activé",
+    "Msg_PasswordNotCorrect":"Le compte d’utilisateur ou le mot de passe est incorrect",
+    "Msg_ReLogin":"Vous êtes déconnecté, essayez de vous reconnecter",
+
+    "Leave":"Quitter?",
+    "Yes": "Oui",
+    "No":"Non",
+    "translation":{
+        "Title":"Langues",
+        "InnerTitle":"Choisissez votre langue"
+    },
+    "myAccount":{
+        "Title":"Mon compte",
+        "ViewAll":"Tous",
+        "MyOrder":"Vos commandes",
+        "CanceledOrder":"Commandes annulées",
+        "PrepareOrder":"Commandes en cours de validation",
+        "OrderArrived":"Commandes validées",
+        "Feedbacks":"Avis clients",
+        "ContactUs":"Contactez-nous",
+        "AboutUs":"A propos de nous",
+        "SignOut":"Déconnexion",
+        "SignIn":"Connectez-vous pour obtenir plus d'information",
+        "SignInOrRegister":"Se connecter/Créer un compte",
+        "Virement": "Commandes virement en attente",
+        "Preparing": "Commandes en cours de préparation"
+        
+    },
+    "signin":{
+        "Email":"Adresse email",
+        "Password":"Mot de passe",
+        "ForgetPassword":"Mot de passe oublié?",
+        "SignIn":"Se connecter",
+        "Register":"Créer un compte",
+        "Return":"Retour"
+    },
+    "readorderlist":{
+        "Commande":"Commande",
+        "CommandeNmber":"Commande",
+        "PurchasingDate":"Date d'achat",
+        "Total":"Montant",
+        "Address":"Adresse",
+        "Detail":"Détails"
+    },
+    "registre":{
+        "CanBeSame":"Peut être la même",
+        "Registre":"Enregistrer",
+        "Title":"Inscription",
+        "Email":"E-mail",
+        "Warming_PleaseEntreCorrectEmail":"Adresse e-mail non valide.",
+        "Password":"Mot de passe",
+        "Warming_PasswordsMustMatch":"Les mots de passe ne correspondent pas",
+        "CompanyInformation":"Informations sur la société",
+        "CompanyName":"Nom de la société",
+        "Warming_CompanyNameCannotEmpty":"Nom de la société est obligatoire",
+        "Siret":"N° TVA",
+        "Warming_SiretCannotBeEmpty":"N° TVA est obligatoire",
+        "Address":"Adresse",
+        "AddressLine1":"Adresse 1",
+        "Warming_MainAddressCannotBeEmpty":"Adresse est obligatoire",
+        "AddressLine2":"Complémentaires",
+        "City":"Ville",
+        "Warming_CityCannotBeEmpty":"Ville est obligatoire",
+        "Country":"Pays",
+        "Warming_CountryCannotBeEmpty":"Pays est obligatoire",
+        "ZipCode":"Code postal",
+        "Warming_ZipCodeCannotBeEmpty":"Code postal est obligatoire",
+        "Warming_AtLeast8Characters":"Les mots de passe doivent au moins avoir 8 caractères.",
+        "Warming_AtLeast1Number":"Au moins 1 chiffre",
+        "Warming_AtLeast1Letter":"Au moins 1 minuscule",
+        "UseTheSameAddressAsTheShippingAddress":"Utilisant cette adresse comme adresse de livraison",
+        "PhoneNumber1":"Numéro de Portable",
+        "PhoneNumber":"Numéro de téléphone",
+        "Compte":"Compte",
+        "Next":"Suivant",
+        "Entreprise":"Entreprise",
+        "Back":"Retour",
+        "Firstname":"Prénom",
+        "Lastname":"Nom",
+        "Fax":"Fax",
+        "Error_UserAlreadyExists":"L'utilisateur déjà existe"
+    },
+    "registre-succed":{
+        "Confirm":"Votre compte est bien enregistré, nous allons envoyer un mail de confirmation à {email}, veuiller confirmer votre address mail pour compléter votre enregistrement(Si vous n'avez pas reçu le mail dans 10 minutes, merci de vérifier vos Spams ou contactez notre service client)",
+        "Return":"Revenez sur page d'acceuille",
+        "ForgetPasswordSendEmail": "Le mail pour réinitialiser le mot de passe est envoyé à l'address mail: {email}(Si vous n'avez pas reçu le mail dans 10 minutes, merci de vérifier vos Spams ou contactez notre service client)"
+    },
+    "contact-us":{
+        "Title":"Contactez-nous",
+        "Submit":"Enregistré",
+        "OpinionAndAdvice":"Avis et conseillé",
+        "Question": "Votre question",
+        "GiveUsYourAdvice":"Vous pouvez nous laisser ici vos précieux avis afin que nous puissions vous offrir de meilleurs services, vous pouvez également laisser votre email afin que nous puissions vous contacter, merci.",
+        "Subject":"Titre",
+        "Message":"Message:",
+        "Opinion":"Avis",
+        "Advice":"Conseillé",
+        "Cancel":"Annulé"
+    },
+    "cart":{
+        "QuantityPerParcel":"Colisage",
+        "Title":"Panier",
+        "Reference":"Référence",
+        "EachBox":"Sous Colisage",
+        "MinimumPurchase":"Minimum d'achat",
+        "Quantity":"Quantité",
+        "All":"Tous",
+        "Somme":"Total",
+        "Confirm":"Validé",
+        "YourCartIsEmpty":"Votre panier est vide!",
+        "TotalQuantity": "QT.Total"
+
+    },
+    "newproduct":{
+        "QuantityEachBox":"Colisage",
+        "QuantityMinimum":"Quantité minimale d'achat",
+        "Reference":"Référence"
+    },
+    "category-list":{
+        "Title":"Catégorie"
+    },
+    "tabs":{
+        "Home":"Accueil",
+        "Discover":"Catégorie",
+        "Cart":"Panier",
+        "Notice":"Notice",
+        "Account":"Compte"
+    },
+    "order-confirmation":{
+        "SameAddress":"Utiliser même addresse pour facturation",
+        "Title":"Confirmation",
+        "MyOrder":"MA COMMANDE",
+        "Article":"Article(s)",
+        "Reference":"Référence",
+        "UnitPrice":"Prix unitaire",
+        "SommeBeforeTaxe":"Total HT",
+        "TVA":"Total TVA",
+        "ShippingCost":"Frais de livraison",
+        "AmountOfOrder":"Net à payer",
+        "ShippingAddressOrBilling":"LIVRAISON/FACTURATION",
+        "Edit":"Modifier",
+        "ShippingAddress":"Adresse de livraison",
+        "ChooseAnotherAddress":"Choisir une autre adresse",
+        "BillingAddress":"Adresse de facturation",
+        "Amount":"Net à payer",
+        "FinalizeTheOrder":"Finaliser la commande",
+        "NoAddressAvailable":"Adresse invalide",
+        "AEstimer":"A estimer",
+        "ClientRemark":"Remarque"
+    },
+    "OrderConfirmSucced":{
+        "Confirm":"Confirmer",
+        "Return":"Retourner"
+    },
+    "read-order-details":{
+        "TxTVA": "Tx TVA",
+        "Title":"Ma Commande",
+        "OrderNumber":"Commande",
+        "DateOfPurchase":"Date d'achat",
+        "Status":"Statut",
+        "ForEditYourOrder":"Pour toutes modifications de votre commandes,",
+        "ContactOurCustomerService":"Contacter notre service client",
+        "YourOrder":"VOTRE COMMANDE",
+        "Referene":"Référence",
+        "Size":"Taille",
+        "Material":"Matière",
+        "Color":"Colour",
+        "Quantity":"Quantité",
+        "ShippingAddress":"Adresse de livraison",
+        "BillingAddress":"Adresse de facturation",
+        "SommeBeforeTaxe":"Total HT",
+        "TVA":"Total TVA",
+        "ShippingCost":"Frais de livraison",
+        "AmountOfOrder":"Net à payer",
+        "Aestimer":"A estimer",
+        "MiseAJour":"Date de mise à jour",
+        "AdminRemark":"Message du vendeur",
+        "CustomerRemark":"Message du client"
+    },
+    "home":{
+        "Title":"Accueil",
+        "BestSellers":"Meilleure vente",
+        "Promotion":"Promotion",
+        "New":"Nouveauté",
+        "Category":"Catégories",
+        "MyList":"Favoris",
+        "Advice":"Avis",
+        "AdvancedSearch":"Recherche avancée",
+        "ContactUs":"Contactez-nous",
+        "ViewAllProduct": "Tous les articles"
+    },
+    "product-detail":{
+        "Favorite":"Préférée",
+        "Cart":"Panier",
+        "Avis":"Avis",
+        "Référence":"Référence",
+        "avis":"avis",
+        "QuantitéMinimal":"Quantité minimum",
+        "Quantitéparcolis":"Colisage",
+        "Couleur":"Couleur",
+        "Taille":"Taille",
+        "Material":"Matière",
+        "Forme":"Forme",
+        "Price":"Prix",
+        "OriginalPrice":"Prix d'origin"
+    },
+    "product-evaluation-list":{
+        "Loading":"En cour",
+        "alaisseunavis":"a laissé un avis",
+        "Avis":"Avis"
+    },
+    "write-product-evaluation":{
+        "SoumettreUnAvis":"Soumettre un avis",
+        "Soumettre":"Soumettre",
+        "Appuyezsurletoilepournoter":"Votre avis",
+        "Titre":"Title",
+        "Votrecommentaire(optionel)":"Votre commentaire(optionnel)"
+
+    },
+    "forget-password":{
+        "sendEmail":"Revoyer mot de passe",
+        "Email":"Email",
+        "forgetPassword":"Mot de passe oublié",
+        "AccountNotExists":"Le compte n'existe pas "
+    },
+    "select-shipping-adress":{
+        "Livraison":"Adresse de livraison",
+        "Ajouter":"Ajouter",
+        "Confirmer":"Confirmer",
+        "Modifier":"Modifier"
+    },
+    "add-adress":{
+        "addAdress":"Ajouter adresse",
+        "Entreprise":"Nom d'entreprise",
+        "Nom":"Nom",
+        "Prenom":"Prénom",
+        "Address":"Adresse",
+        "Address2":"Adresse supplémentaire",
+        "City":"Ville",
+        "Country":"Pays",
+        "PostalCode":"Code postale",
+        "Telephone":"Téléphone",
+        "Fax":"Fax",
+        "Enregistrer":"Enregistrer",
+        "modifyAdress":"Modifier Adresse"
+    },
+    "page-order-confirmation-succeess":{
+        "Message":"Nous vous remercions d'avoir passé la commande sur le site. Vous allez recevoir votre commande dans votre boîte d'E-mail. Nous allons traiter votre commande dans les meilleurs délais, puis vous demander le règlement par virement." 
+    },
+    "modify-user-info":{
+        "modifyUserInfo":"Modifier l'information de client",
+        "Siret":"N° TVA"
+    },
+    "user-info":{
+        "UserInfo":"Information de client",
+        "Avis":"Avis",
+        "Commandes":"Mes commandes",
+        "Favoris":"Favoris",
+        "Aivssoumis":"Aivs soumis",
+        "ProduitsFavoris":"Produits Favoris"
+    },
+    "about-us":{
+        "AProposdeNous":"A propos de nous",
+        "Version":"Version",
+        "visiternotresite":"Visiter notre site",
+        "Email":"Email",
+        "Adresse":"Adresse",
+        "liveChat":"Chat en ligne"
+    },
+    "advanced-search":{
+        "advancedSearch":"Recherche précise",
+        "Votrerecherche":"Votre recherche",
+        "Criteresderecherche":"Critères de recherche",
+        "Categories":"Catégories",
+        "SousCategories":"Sous catégories",
+        "Minquantitedachat":"Minimum quantité d'achat",
+        "Prix":"Prix",
+        "Trierpar":"Trier par",
+        "Nouveaute":"Nouveauté",
+        "Popularite":"Popularité",
+        "Search":"Recherche",
+        "Motcle":"Mots clés",
+        "Price_Increase": "Prix croissant",
+        "Price_Decrease":"Prix décroissant",
+        "PublishDate_Recent":"Nouveauté",
+        "Porpularity_More":"Popularité"
+    },
+    "search":{
+        "search":"Recherche"
+    },
+    "notification":{
+        "notification":"Notification",
+        "Systemmessage":"Système message"
+    }
+ 
+ 
+}

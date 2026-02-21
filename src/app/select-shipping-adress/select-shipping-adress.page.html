@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'select-shipping-adress.Livraison' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <p *ngIf="!loading && (adressList==null || adressList.length<=0) " class="ion-text-center" text-center>{{'NoDataToDisplay' | translate}}</p> -->
+  <a (click)="addNewAddress()" class="ion-float-right" float-right
+    style="margin:10px 10px">{{'select-shipping-adress.Ajouter' | translate}}</a>
+  <ion-list style="margin-top: 30px; clear: both;">
+    <mat-radio-group class="example-radio-group" [(ngModel)]="selectedAdressId">
+      <div class="productCard" *ngFor="let item of adressList">
+        <ion-grid class="gridStyle" style="background-color: white;">
+          <ion-row class="colStyle">
+            <ion-col size="2" col-2 class="align-text-middle colStyle">
+              <mat-radio-button class="example-radio-button" [checked]="item.IsDefaultAdress"
+                style="color:#534d7a; margin-top: 30px;" color="primary" [value]="item.Id">
+              </mat-radio-button>
+            </ion-col>
+            <ion-col size="10" col-10 class="colStyle">
+              <a float-right class="ion-float-right"
+                (click)="modifyAdress(item)">{{'select-shipping-adress.Modifier' | translate}}</a>
+              <p class="addressDetail">{{item.ContactFirstName}} </p>
+              <p class="addressDetail">{{item.ContactLastName}}</p>
+              <p class="addressDetail">{{item.FirstLineAddress}}</p>
+              <p class="addressDetail">{{item.SecondLineAddress}}</p>
+              <p class="addressDetail">{{item.ZipCode}} {{item.City}} </p>
+              <p class="addressDetail">{{item.ContactTelephone}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </mat-radio-group>
+  </ion-list>
+</ion-content>
+<ion-footer *ngIf="getSelectedAdress()!=null">
+  <ion-toolbar style="padding-bottom: 0px;">
+    <div style="padding: 5px;">
+      <p class="addressDetail">{{  getSelectedAdress().ContactFirstName}} </p>
+      <p class="addressDetail">{{ getSelectedAdress().FirstLineAddress}}</p>
+      <p class="addressDetail">{{ getSelectedAdress().ZipCode}} {{ getSelectedAdress().City}}</p>
+      <div class="ion-text-center">
+        <ion-button size="small" color="primary" style="width: 100%;" (click)="saveShippingAdress()">
+          {{'select-shipping-adress.Confirmer' | translate}}</ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

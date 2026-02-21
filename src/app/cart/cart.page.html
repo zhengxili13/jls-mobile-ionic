@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{'cart.Title' | translate}}( 
+      <span *ngIf="cartService.cartProductList==null">0</span>
+      <span *ngIf="cartService.cartProductList!=null">{{cartService.cartProductList.length}}</span> )</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="cartService.checkProductListIsAvailable()" >
+    <div class="productCard" *ngFor="let item of cartService.cartProductList">
+      <ion-grid class="colStyle">
+        <ion-row class="colStyle">
+          <ion-col size="1" col-1 class="align-text-middle  ion-no-padding">
+            <ion-checkbox [(ngModel)]="item.Selected" (ngModelChange)="itemCheckBoxChange(item)">
+            </ion-checkbox>
+          </ion-col>
+          <ion-col size="3" col-3 class="colStyle">
+            <a (click)="viewProductDetail(item.ProductId)">
+              <img *ngIf="item.DefaultPhotoPath!=null" class="align-text-middle" [src]="host+item.DefaultPhotoPath">
+              <img *ngIf="item.DefaultPhotoPath==null"   src="assets/imgs/not-found.png">
+            </a>
+          </ion-col>
+          <ion-col size="8" col-8 class="colStyle">
+            <div>
+              <p style="float: right; margin-right: 4px; margin-bottom: 0px;" *ngIf="logined">{{item.Price}}<span *ngIf="item.Price!=null">€</span>(HT)</p>
+              <h6 (click)="viewProductDetail(item.ProductId)" class="productTitleFont"> {{item.Label}} </h6>
+              <p class="descriptionFont">{{'cart.Reference' | translate}}: {{item.Code}} </p>
+              <ion-button  class="ion-float-right" icon-only float-right  style="font-size:0.6em; clear: both; height: 3em;" (click)="cartService.removeItem(item)">
+                <ion-icon name="close" slot="icon-only"></ion-icon>
+              </ion-button>
+              <p class="descriptionFont" *ngIf="item.QuantityPerParcel==null">{{'cart.QuantityPerParcel' | translate}}: {{item.QuantityPerBox}} </p>
+              <div *ngIf="item.QuantityPerParcel!=null">
+                <p class="descriptionFont" >{{'cart.QuantityPerParcel' | translate}}: {{item.QuantityPerParcel}} </p>
+                <p class="descriptionFont">{{'cart.EachBox' | translate}}: {{item.QuantityPerBox}} </p>
+              </div>
+              <p class="descriptionFont">{{'cart.TotalQuantity' | translate}}: {{item.QuantityPerBox * item.Quantity}} </p>
+              <p style="margin-bottom: 0px;">Paquets:</p>
+              <!-- <p class="descriptionFont">{{'cart.MinimumPurchase' | translate}}:{{item.MinQuantity}}</p> -->
+            </div>
+            <app-ion-meter class="ion-float-right" float-right [buyNumber]="checkQuantityWithMinQuantity(item.MinQuantity,item.Quantity)" maxQty='10000' [minQty]='item.MinQuantity' [goods]="item.ReferenceId" (onUpdate)="onUpdate($event,item.MinQuantity)">
+            </app-ion-meter>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-list>
+  <div *ngIf="!cartService.checkProductListIsAvailable()">
+   <img style="margin-top: 5px;" src="assets/imgs/empty_cart.png">
+   <h1 style="text-align: center; color: gray;"> {{'cart.YourCartIsEmpty' | translate}}</h1>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar style="padding-bottom: 0px;">
+    <div style="margin-left: 5px;margin-top: 6px;" float-left class="footerComponent ion-float-left">
+      <ion-checkbox [disabled]="!cartService.checkProductListIsAvailable()" name="AllProduct" [(ngModel)]="checkAllProduct" (ngModelChange)="cartService.AllCheckBoxChange(checkAllProduct)">
+      </ion-checkbox>
+      <ion-label style="margin-left: 3px;">{{'cart.All' | translate}}</ion-label>
+    </div>
+    <div  class="footerComponent ion-float-right">
+      <ion-label *ngIf="logined">{{'cart.Somme' | translate}}:{{cartService.CalculAccount()  | number:'1.2-2'}}€(HT)</ion-label>
+      <ion-button shape="round" size="small" round small [disabled]="!cartService.checkProductListIsAvailable() || !cartService.checkSelectedProductListIsEmpty()" (click)="valideCart()">{{'cart.Confirm' | translate}}</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

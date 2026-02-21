@@ -1,0 +1,9 @@
+# Ionic 8 and Angular 17 browser support
+# https://ionicframework.com/docs/reference/browser-support
+
+Chrome >=89
+ChromeAndroid >=89
+Firefox >=75
+Edge >=89
+Safari >=15
+iOS >=15

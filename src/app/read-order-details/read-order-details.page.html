@@ -1,0 +1,127 @@
+<ion-header>
+  <ion-toolbar>
+  
+    <ion-title >{{'read-order-details.Title' | translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" >
+  <h6>{{'read-order-details.OrderNumber' | translate}} n°{{OrderInfo.Id}} </h6>
+  <p><b>{{'read-order-details.DateOfPurchase' | translate}}: </b>{{OrderInfo.CreatedOn}}</p>
+  <p><b>{{'read-order-details.Status' | translate}}: </b><ion-badge  [color]="getStatusClass(Status.Code)" style="color: white;"> {{Status.Label}}</ion-badge></p>
+  <p>{{'read-order-details.ForEditYourOrder' | translate}}
+    <br>
+    <a class="buttonLine" (click)="ContactUs()">{{'read-order-details.ContactOurCustomerService' | translate}}</a>
+  </p>
+  <ion-list>
+    <ion-card class="productCard" *ngFor="let item of ProductList; let i = index">
+      <ion-card-header *ngIf="i==0">
+        <h3>{{'read-order-details.YourOrder' | translate}}</h3>
+      </ion-card-header>
+      <ion-card-content>
+        <div>
+          <ion-row>
+            <ion-col size="4" col-4>
+
+              <a [routerLink]="['/ProductDetailPage']" [queryParams]="{productId: item.ProductId}">
+                <img *ngIf="item.DefaultPhotoPath!=null" class="align-text-middle"  [src]="host+item.DefaultPhotoPath">
+                <img class="align-text-middle" src="assets/imgs/not-found.png" *ngIf="item.DefaultPhotoPath==null">
+              </a>
+              
+            </ion-col>
+            <ion-col size="8" col-8>
+              <a [routerLink]="['/ProductDetailPage']" [queryParams]="{productId: item.ProductId}">
+                {{item.Label}}
+              </a>
+              <p class="descriptionFont">{{'read-order-details.Referene' | translate}}: {{item.Code}}</p>
+              <p class="descriptionFont">{{'newproduct.QuantityEachBox' | translate}}: {{item.QuantityPerBox}}</p>
+              <p class="descriptionFont">{{'read-order-details.Quantity' | translate}}: {{item.Quantity}}</p>
+              <p>{{'cart.TotalQuantity' | translate}}: {{item.Quantity * item.QuantityPerBox}}</p>
+              <p class="descriptionFont">{{'read-order-details.Size' | translate}}: {{item.Size}}</p>
+              <p class="descriptionFont">{{'read-order-details.Material' | translate}}: {{item.Material}}</p>
+              <p class="descriptionFont">{{'read-order-details.Color' | translate}}: {{item.Color}}</p>
+              <p class="descriptionFont">{{'product-detail.Price' | translate}}: {{item.Price | number:'1.2-2'}}€(HT)</p>
+              <br>
+              <div>{{'read-order-details.Quantity' | translate}} x {{item.Quantity * item.QuantityPerBox}} <span float-right class="sommeStyle ion-float-right" >{{item.Price * item.QuantityPerBox * item.Quantity   | number:'1.2-2'}}€(HT)</span>
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <ion-list class="ion-margin-top">
+      <ion-card class="productCard">
+          <ion-card-header class="addressStyle">
+            <h3> <b>{{'read-order-details.ShippingAddress' | translate}}</b> </h3>
+          </ion-card-header>
+          <ion-card-content>
+                <p class="descriptionFont">{{CustomerInfo.EntrepriseName}} </p>
+                <p class="descriptionFont">{{ShippingAdress.FirstLineAddress}}</p>
+                <p class="descriptionFont">{{ShippingAdress.SecondLineAddress}}</p>
+                <p class="descriptionFont">{{ShippingAdress.ZipCode}} {{ShippingAdress.City}} {{FacturationAdress.Country}}</p>
+                <p class="descriptionFont">{{ShippingAdress.ContactTelephone}}</p>
+          </ion-card-content>
+      </ion-card>
+  </ion-list>
+
+  <ion-list class="ion-margin-top">
+      <ion-card class="productCard">
+          <ion-card-header class="addressStyle">
+            <h3><b>{{'read-order-details.BillingAddress' | translate}}</b> </h3>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="descriptionFont">{{CustomerInfo.EntrepriseName}} </p>
+            <p class="descriptionFont">{{FacturationAdress.FirstLineAddress}}</p>
+            <p class="descriptionFont">{{FacturationAdress.SecondLineAddress}}</p>
+            <p class="descriptionFont">{{FacturationAdress.ZipCode}} {{FacturationAdress.City}}  {{FacturationAdress.Country}} </p> 
+            <p class="descriptionFont">{{FacturationAdress.ContactTelephone}}</p>
+          </ion-card-content>
+      </ion-card>
+  </ion-list>
+
+
+  <ion-list *ngIf="ClientRemark!=null" class="ion-margin-top">
+    <ion-card class="productCard">
+        <ion-card-header class="addressStyle">
+          <h3> <b>{{'read-order-details.CustomerRemark' | translate}}</b> </h3>
+        </ion-card-header>
+        <ion-card-content>
+              <p class="descriptionFont">{{ClientRemark.Text}} </p>
+              <p class="descriptionFont">{{ClientRemark.UpdatedOn}}</p>
+              
+        </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-list *ngIf="AdminRemark!=null" style="margin-bottom: 20px;" class="ion-margin-top">
+    <ion-card class="productCard">
+        <ion-card-header class="addressStyle">
+          <h3> <b>{{'read-order-details.AdminRemark' | translate}}:</b> </h3>
+        </ion-card-header>
+        <ion-card-content>
+              <p class="descriptionFont">{{AdminRemark.Text}} </p>
+              <p class="descriptionFont">{{'read-order-details.MiseAJour' | translate}}: {{AdminRemark.UpdatedOn}}</p>
+        </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <div class="alert alert-success ion-margin-top" role="alert" [innerHTML]="ShippingMessage">
+  </div>
+  <ion-list>
+      <ion-card class="productCard">
+          <ion-card-content>
+              <p class="expenseFont">{{'read-order-details.SommeBeforeTaxe' | translate}}:<span class="ion-float-right" float-right>{{ calculBasicTotalPrice() | number : '1.2-2'}}€</span></p>
+              <p class="expenseFont">{{'read-order-details.TxTVA' | translate}}:<span class="ion-float-right" float-right>{{TaxRate}}% </span> </p>
+              <p class="expenseFont">{{'read-order-details.TVA' | translate}}:<span class="ion-float-right" float-right>{{TaxRate*0.01* calculBasicTotalPrice() | number : '1.2-2'}}€ </span> </p>
+              <P class="expenseFont">{{'read-order-details.ShippingCost' | translate}}:
+                <span class="ion-float-right" float-right> {{'read-order-details.Aestimer' | translate}}</span>
+              </P>
+              <p class="totalCommande expenseFont">{{'read-order-details.AmountOfOrder' | translate}}:<span class="ion-float-right" float-right>{{ (calculBasicTotalPrice()*(1+TaxRate*0.01) | number : '1.2-2')}}€</span></p>
+          </ion-card-content>
+      </ion-card>
+  </ion-list>
+</ion-content>

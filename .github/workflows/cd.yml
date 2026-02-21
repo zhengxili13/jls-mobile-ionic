@@ -1,0 +1,58 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Capacitor Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # 🛠️ 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 🛠️ 安装 Node.js & npm
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 🛠️ 安装项目依赖
+      - name: Install Dependencies
+        run: npm install
+
+      # ⚡ 构建 Ionic 应用
+      - name: Build Ionic App
+        run: npm run build
+
+      # 🔹 安装 Capacitor Android 依赖
+      - name: Install Capacitor Android
+        run: |
+          npm install @capacitor/android
+          npx cap sync android
+
+      # 🛠️ 设置 Java & Gradle 环境
+      - name: Setup Java & Gradle
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # 推荐使用 Adoptium Temurin JDK
+          java-version: '17' # 你可以改为 11 或 17
+
+      # 🛠️ 安装 Android SDK
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      # 🛠️ 构建 Android Debug APK
+      - name: Build Android Debug APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      # 📦 上传 APK 作为构建产物
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk

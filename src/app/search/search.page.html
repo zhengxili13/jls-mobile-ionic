@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button icon-only small (click)="clearSearchHistroy()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{'search.search' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-searchbar (search)="search()" [(ngModel)]="SearchText"></ion-searchbar>
+  <ion-list>
+    <ion-item button *ngFor="let item of items" (click)="startSearch(item)">
+      {{ item }}
+    </ion-item>
+  </ion-list>
+</ion-content>

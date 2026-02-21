@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title text-center>{{'myAccount.Title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="notLogin">
+    <ion-card>
+      <ion-card-header class="ion-text-center">
+        <p>
+          {{'myAccount.SignIn' | translate}}
+        </p>
+      </ion-card-header>
+      <ion-card-content class="ion-text-center">
+        <ion-button size="small" fill="outline" (click)="showModal()">{{'myAccount.SignInOrRegister' | translate}} </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="logined">
+    <ion-list class="ion-margin-top">
+      <ion-item ion-item (click)="UserInfoPage()">
+        <ion-avatar slot="start" item-start>
+          <img src="assets/imgs/logo-512.png">
+        </ion-avatar>
+        <ion-label style="font-size: 1.5em;"> {{username}} </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="ion-margin-top">
+      <ion-list-header>
+        <ion-label>
+          <span> {{'myAccount.MyOrder' | translate}} </span>
+          <a class="viewAll" (click)="readCommandList('All')">{{'myAccount.ViewAll' | translate}} </a>
+        </ion-label>
+        
+      </ion-list-header>
+      <ion-item button detail="true" ion-item (click)="readCommandList('OrderStatus_Progressing')">{{'myAccount.PrepareOrder' | translate}}</ion-item>
+      <ion-item button detail="true" ion-item (click)="readCommandList('OrderStatus_Virement')">{{'myAccount.Virement' | translate}}</ion-item>
+      <ion-item button detail="true" ion-item (click)="readCommandList('OrderStatus_Preparing')">{{'myAccount.Preparing' | translate}}</ion-item>
+      <ion-item button detail="true" ion-item (click)="readCommandList('OrderStatus_Valid')">{{'myAccount.OrderArrived' | translate}}</ion-item>
+      <ion-item button detail="true" ion-item (click)="readCommandList('OrderStatus_Refus')">{{'myAccount.CanceledOrder' | translate}}</ion-item>
+    </ion-list>
+
+    <ion-list class="ion-margin-top">
+
+      <ion-item button detail="true" (click)="translation()">
+        <ion-icon class="iconStyle" name="globe" item-start slot="start"></ion-icon>
+        {{'translation.Title' | translate}}
+      </ion-item>
+
+      <ion-item button detail="true" ion-item (click)="myAvis()">
+        <ion-icon class="iconStyle" name="at" slot="start" item-start ></ion-icon>
+        {{'myAccount.Feedbacks' | translate}}
+      </ion-item>
+      <ion-item button detail="true" ion-item (click)="contactUs()">
+        <ion-icon class="iconStyle" name="mail" item-start slot="start"></ion-icon>
+       {{'myAccount.ContactUs' | translate}}
+      </ion-item>
+      <ion-item button detail="true" ion-item (click)="aboutUs()">
+        <ion-icon class="iconStyle" name="information-circle" item-start slot="start"></ion-icon>
+        {{'myAccount.AboutUs' | translate}}
+      </ion-item>
+    </ion-list>
+    <ion-list class="ion-margin-top">
+        <ion-button  Expand="full" full color="danger" class="ion-text-center ion-no-margin" (click)="logout()">
+        {{'myAccount.SignOut' | translate}}
+        </ion-button>
+    </ion-list>
+
+  </div>
+</ion-content>

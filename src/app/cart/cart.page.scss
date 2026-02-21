@@ -1,0 +1,29 @@
+.ios ion-tab ion-footer .toolbar:last-child {
+   // padding-bottom: $toolbar-ios-padding!important;
+   // min-height: $toolbar-ios-height!important;
+  }
+
+.footerComponent {
+    display: flex;
+    align-items: center;
+}
+.align-text-middle {
+    display: flex;
+    align-items: center;
+}
+.productCard{
+    border-bottom: 0.5px solid;
+    border-color: darkgrey;
+}
+.productTitleFont{
+    font-size: 1.2rem;
+    margin: 0px;
+    text-decoration: underline;
+}
+.descriptionFont{
+    font-size: 1rem;
+    margin: 2px 0px;
+}
+.colStyle{
+    padding: 5px 5px 0px 5px;
+}

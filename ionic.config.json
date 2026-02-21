@@ -1,0 +1,7 @@
+{
+  "name": "learningProjet",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button Expand="full" color="primary" (click)="saveUserInfo()">{{'add-adress.Enregistrer' | translate}}
+    </ion-button>
+    </ion-buttons>
+    <ion-title>{{'modify-user-info.modifyUserInfo' | translate}}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card style=" margin: 0px; width: 100%;">
+    <ion-card-content style="padding-bottom: 3px;">
+      <form class="example-form" [formGroup]="userForm">
+        <mat-form-field class="example-full-width">
+          <input required matInput placeholder="{{'add-adress.Entreprise' | translate}}"
+            formControlName="EntrepriseName">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input required type="tel" matInput placeholder="{{'modify-user-info.Siret' | translate}}"
+            formControlName="Siret">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <span matPrefix>+33 &nbsp;</span>
+          <input required type="tel" matInput placeholder="{{'add-adress.Telephone' | translate}}"
+            formControlName="PhoneNumber">
+        </mat-form-field>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+
+  <div style=" padding: 8px; ">
+    <ion-list style="margin-bottom: 0px;">
+      <ion-card class="productCard" style="width: 100%; border-bottom: 0px;">
+        <ion-card-header style="padding: 8px 4px 0px;">
+          <h3 class="productTitle ion-no-margin">{{'order-confirmation.ShippingAddress' | translate}}</h3>
+        </ion-card-header>
+        <ion-card-content style="padding: 0px; " *ngIf="defaultShippingAdress!=null">
+          <p class="descriptionFont">{{defaultShippingAdress.ContactFirstName}} <span>
+              {{defaultShippingAdress.ContactLastName}}</span> </p>
+          <p class="descriptionFont">{{defaultShippingAdress.FirstLineAddress}} </p>
+          <p class="descriptionFont">{{defaultShippingAdress.SecondLineAddress}} </p>
+          <p class="descriptionFont">{{defaultShippingAdress.ZipCode}} <span> {{ defaultShippingAdress.City }} </span>
+          </p>
+          <p class="descriptionFont">{{defaultShippingAdress.ContactTelephone}} </p>
+        </ion-card-content>
+        <ion-card-content style="padding-left: 8px;" *ngIf="defaultShippingAdress==null">
+          <p class="descriptionFont" text-center>{{'NoDataToDisplay' | translate}}</p>
+        </ion-card-content>
+      </ion-card>
+      <div class="ion-text-center" text-center>
+        <ion-button size="small" color="primary" fill="outline" (click)="selectShippingAdress()"
+          *ngIf="defaultShippingAdress!=null">{{'order-confirmation.ChooseAnotherAddress' | translate}}</ion-button>
+        <ion-button ion-button size="small" color="primary" fill="outline" (click)="selectShippingAdress()"
+          *ngIf="defaultShippingAdress==null">{{'Add' | translate}}</ion-button>
+      </div>
+    </ion-list>
+  </div>
+
+  <div style=" padding: 8px; margin-bottom: 20px;">
+    <ion-card class="productCard" style="width: 100%; border-bottom: 0px;">
+      <ion-card-header style="padding: 8px 4px 0px;" class="productTitle">
+
+        <h3 class="productTitle ion-no-margin">{{'order-confirmation.BillingAddress' | translate}} <a float-right
+            class="articleNumber ion-float-right"
+            (click)="modifyFacturationAdress()">{{'order-confirmation.Edit' | translate}}</a></h3>
+      </ion-card-header>
+      <ion-card-content style="padding: 0px;">
+        <p class="descriptionFont">{{facturationAdress.ContactFirstName}} <span>
+            {{facturationAdress.ContactLastName}}</span> </p>
+        <p class="descriptionFont">{{facturationAdress.FirstLineAddress}} </p>
+        <p class="descriptionFont">{{facturationAdress.SecondLineAddress}} </p>
+        <p class="descriptionFont">{{facturationAdress.ZipCode}} <span> {{ facturationAdress.City }} </span> </p>
+        <p class="descriptionFont">{{facturationAdress.ContactTelephone}} </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+ 
+</ion-content>

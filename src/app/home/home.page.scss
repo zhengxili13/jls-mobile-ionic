@@ -1,0 +1,100 @@
+
+    .scroll-content {
+        overflow-y: auto !important;
+    }
+    
+    .slidePhoto{
+        height: 75%;
+    }
+    .slidePagers{
+        height: 48%;
+    }
+    .content{
+       // --background: #ffffff!important;
+        height: 100%;
+    }
+    .buttonRow{
+        margin: 10px 15px;
+    }
+
+    .myButton{
+        --border-radius: 0px;
+    }
+
+    .buttonZone{
+        position: fixed; 
+        bottom: env(safe-area-inset-bottom); 
+        margin: auto;
+        left: 0;
+        right: 0;
+        margin-bottom: 15%;
+    }
+  
+    .avisColor{
+        color: #fff;
+        --background: rgb(198, 130, 238);
+    }
+    .promotionColor{
+        color: #fff;
+        --background: cadetblue;
+    }
+    .bestSaleColor{
+        color: #fff;
+        --background: indianred;
+    }
+    .categoryColor{
+        color: #fff;
+    --background: burlywood;
+    }
+    .myListColor{
+        color: #fff;
+        --background: coral;
+    }
+    .nouveauteColor{
+        color: #fff;
+        --background: cornflowerblue;
+    }
+    .linkColor{
+        color: #fff;
+    --background: darksalmon;
+    }
+    .xxxColor{
+        color: #fff;
+    --background: mediumpurple;
+    }
+
+
+ion-card{
+    margin: 0px;
+    max-width: 100px;
+    min-width: 100px;
+    display: table-cell;
+    padding-bottom: 0px ;
+    border: 1px solid #b0b0b069;
+    border-radius: 10px;
+    min-width: 35vw;
+}
+ion-card-content{
+    padding-left: 2px;
+}
+ion-card-header{
+    padding:3px;
+}
+
+.productScrollTitle{
+    text-align: left; 
+    margin-left: 5px;
+}
+.productScrollMore{
+    float: right; 
+    margin-right: 5px;
+    font-size: medium;
+}
+
+
+.productDisplay{
+    overflow-x: auto; 
+    border-spacing: 5px;
+    background-color: #fafafa33;
+    border: 1px solid rgba(255,255,255,.1);
+}

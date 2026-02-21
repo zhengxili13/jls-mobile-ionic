@@ -1,0 +1,29 @@
+.articleNumber{
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.productCard{
+    width: fit-content;
+    margin-left: 0px;
+    margin-right: 0px;
+    box-shadow: none !important;
+    border-bottom: 0.5px solid #dedede;
+    margin-top: 0px;
+}
+
+.productTitle{
+    font-weight: 500;
+    background-color: #f4f4f4;
+    padding: 3px;
+    color: black;
+}
+
+.descriptionFont{
+    margin: 2px 0px;
+    color: var(--ion-color-warning-contrast);
+}
+
+.mat-form-field{
+    display: inline;
+}

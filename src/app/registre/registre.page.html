@@ -1,0 +1,137 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tabMyAccount"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'registre.Title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="background-color: #f4f4f4!important;">
+  <mat-horizontal-stepper #stepper="matHorizontalStepper" linear>
+    <mat-step [stepControl]="basicInfoForm">
+      <form [formGroup]="basicInfoForm">
+        <ng-template matStepLabel>{{'registre.Compte' | translate}}</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="{{'registre.Email' | translate}}" formControlName="email" required>
+          <mat-error *ngIf="isAlreadyExists()">
+            {{'registre.Error_UserAlreadyExists' | translate}}
+          </mat-error>
+          <mat-error *ngIf="basicInfoFormCtrl.email.errors && !isAlreadyExists()">
+            {{'registre.Warming_PleaseEntreCorrectEmail' | translate}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="{{'registre.Password' | translate}}" formControlName="password" required
+            type="password">
+          <mat-error *ngIf="basicInfoFormCtrl.password.errors">
+            {{'registre.Warming_AtLeast8Characters' | translate}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="{{'registre.Password' | translate}}" formControlName="confirmPassword" required
+            type="password">
+        </mat-form-field>
+        <div *ngIf="confirmPassword()" style="color: red; margin-bottom: 7px;">
+          {{'registre.Warming_PasswordsMustMatch' | translate}}
+        </div>
+        <div>
+          <button mat-raised-button color="primary" matStepperNext>{{'registre.Next' | translate}}</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="entrepriseForm">
+      <form [formGroup]="entrepriseForm">
+        <ng-template matStepLabel>{{'registre.Entreprise' | translate}}</ng-template>
+
+        <mat-form-field>
+          <input matInput placeholder="{{'registre.CompanyName' | translate}}" formControlName="entrepriseName"
+            required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="{{'registre.Siret' | translate}}" formControlName="siret" required>
+        </mat-form-field>
+
+  
+          <mat-form-field>
+            <mat-label>{{'registre.PhoneNumber1' | translate}}</mat-label>
+            <input matInput required type="tel" matInput placeholder="EX: +33 xx xx xx xx xx"
+              formControlName="phoneNumber">
+          </mat-form-field>
+     
+        <div>
+          <button mat-raised-button color="warn" matStepperPrevious>{{'registre.Back' | translate}}</button>
+          <button mat-raised-button color="primary" matStepperNext>{{'registre.Next' | translate}}</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="addressForm">
+      <form [formGroup]="addressForm">
+        <ng-template matStepLabel>{{'registre.Address' | translate}}</ng-template>
+
+
+        <!-- <ion-row>
+          <ion-col col-6>
+            <mat-form-field>
+              <input matInput placeholder="{{'registre.Firstname' | translate}}" formControlName="ContactFirstName"
+                required>
+            </mat-form-field>
+          </ion-col>
+          <ion-col col-6>
+            <mat-form-field>
+              <input matInput placeholder="{{'registre.Lastname' | translate}}" formControlName="ContactLastName"
+                required>
+            </mat-form-field>
+          </ion-col>
+        </ion-row> -->
+
+        <mat-form-field>
+          <input matInput placeholder="{{'registre.AddressLine1' | translate}}" formControlName="FirstLineAddress"
+            required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="{{'registre.AddressLine2' | translate}}" formControlName="SecondLineAddress">
+        </mat-form-field>
+
+        <ion-row>
+          <ion-col col-6>
+            <mat-form-field>
+              <input matInput placeholder="{{'registre.ZipCode' | translate}}" formControlName="ZipCode" required>
+            </mat-form-field>
+          </ion-col>
+          <ion-col col-6>
+            <mat-form-field>
+              <input matInput placeholder="{{'registre.City' | translate}}" formControlName="City" required>
+            </mat-form-field>
+          </ion-col>
+   
+        </ion-row>
+        <mat-form-field>
+          <input matInput placeholder="{{'registre.Country' | translate}}" formControlName="Country">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{'registre.PhoneNumber' | translate}} ({{'registre.CanBeSame' | translate}})</mat-label>
+          <input matInput required type="tel" matInput
+            placeholder="EX: +33 xx xx xx xx xx"
+            formControlName="ContactTelephone">
+
+        </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{'registre.Fax' | translate}}</mat-label>
+            <input matInput type="tel" matInput placeholder="EX: +33 xx xx xx xx xx"
+              formControlName="ContactFax">
+          </mat-form-field>
+        <div>
+          <button mat-raised-button color="warn" matStepperPrevious>{{'registre.Back' | translate}}</button>
+          <button mat-raised-button color="primary" (click)='registre()'>{{'registre.Registre' | translate}}</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</ion-content>

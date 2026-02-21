@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'category-list.Title' | translate}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="loading"  class="ion-text-center spinner ion-margin-top">
+    <ion-spinner center></ion-spinner>
+    <p text-center font-size-small>Loading...</p>
+  </div>
+  <ion-list>
+    <ion-item button *ngFor="let item of categoryList" (click) = "secondMenu(item.ReferenceId,item.Reference.Label)">
+        {{item.Reference.Label}}({{item.TotalCount}})
+    </ion-item>   
+  </ion-list>
+</ion-content>

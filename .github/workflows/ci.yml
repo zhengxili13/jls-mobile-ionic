@@ -1,0 +1,38 @@
+name: Ionic Build CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          
+      - name: Clean npm cache
+        run: npm cache clean --force
+        
+      - name: Install dependencies
+        run: npm install
+
+      - name: Ionic build
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: www
+          path: www  # Ionic build output folder
+
+      - name: Clean up node_modules (optional)
+        run: rm -rf node_modules

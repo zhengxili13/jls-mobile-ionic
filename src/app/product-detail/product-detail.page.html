@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{product.Label | uppercase }} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+
+  <div>
+    <!-- <img class="productDetailImg" src="assets/imgs/productDetailImg.png" /> -->
+    <swiper pager>
+      <ng-template swiperSlide *ngFor="let item of product.ImagesPath">
+        <div class="product-card__badges-list" style="top:18px;right:18px;">
+          <div *ngIf="logined&& utils.formatProductPromotionInfo(product)!=null" class="product-card__badge promotion"
+            style="font-size: 14px;">
+            {{utils.formatProductPromotionInfo(product).discountPerCent}}%
+          </div>
+          <div *ngIf="product.IsNew" class="product-card__badge_New promotion"
+            style="position: absolute; top: 25px;right: -2px;">
+            {{'home.New' | translate}}
+          </div>
+        </div>
+        <img class="productDetailImg" [src]="host+item.Path" *ngIf="item.Path" style="height: 250px;" />
+      </ng-template>
+      <ng-template swiperSlide ngIf="product.ImagesPath==null||product.ImagesPath.length==0">
+        <img class="productDetailImg" src="assets/imgs/not-found.png" style="height: 250px;" />
+      </ng-template>
+    </swiper>
+
+  </div>
+  <div>
+    <ion-row class="ion-buttonRow" class="ion-text-center">
+      <ion-col size="4" col-4 class="iconCol" (click)="addProductIntoFavoriteList()">
+        <ion-button icon-only>
+          <ion-icon name='bookmark'></ion-icon>
+          <!-- isActive="{{isFavorite}}" -->
+        </ion-button>
+        <p class="iconText">{{'product-detail.Favorite' | translate}}</p>
+      </ion-col>
+      <ion-col size="4" col-4 class="iconCol" (click)="addInCart($event,product)">
+        <ion-button icon-only>
+          <ion-icon name='cart'></ion-icon>
+        </ion-button>
+        <p class="iconText">{{'product-detail.Cart' | translate}}</p>
+      </ion-col>
+      <ion-col size="4" col-4 class="iconCol">
+        <ion-button icon-only (click)="writeEvaluation()">
+          <ion-icon name='create'></ion-icon>
+        </ion-button>
+        <p class="iconText">{{'product-detail.Avis' | translate}}</p>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-list>
+    <ion-item>
+      {{product.Label}}
+    </ion-item>
+    <ion-item>
+      <p style="font-size: unset;color:#222;">{{'product-detail.Référence' | translate}} : {{product.ReferenceCode}}</p>
+    </ion-item>
+
+    <ion-item align-items-center (click)="displayAvis()">
+
+      <ion-col col-2 size="2">
+        <ion-icon color="primary" style="font-size:xx-large;" name="chatbox"></ion-icon>
+      </ion-col>
+      <ion-col col-6 size="6">
+
+        <app-star-rating [rating]="calculCommentAverageLevel()" [readonly]="true" size="24px">
+        </app-star-rating>
+      </ion-col>
+      <ion-col col-4 size="4"><span float-right class="nombreAvis" (click)="displayAvis()"
+          *ngIf="product.Comments!=null&&product.Comments.length>0">({{product.Comments.length}}
+          {{'product-detail.avis' | translate}})</span> </ion-col>
+    </ion-item>
+
+    <ion-item *ngIf="logined">
+      {{'product-detail.Price' | translate}} :{{product.Price}} € (HT)
+    </ion-item>
+
+    <ion-item *ngIf="logined&& utils.formatProductPromotionInfo(product)!=null">
+      {{'product-detail.OriginalPrice' | translate}} :<span
+        style="text-decoration:line-through;">{{product.PreviousPrice}} €</span>(HT)
+    </ion-item>
+
+    <ion-item *ngIf="product.QuantityPerParcel==null">
+      {{'cart.QuantityPerParcel' | translate}} : {{product.QuantityPerBox}}
+    </ion-item>
+    <ion-item *ngIf="product.QuantityPerParcel!=null">
+      {{'cart.QuantityPerParcel' | translate}} : {{product.QuantityPerParcel}}
+    </ion-item>
+    <ion-item *ngIf="product.QuantityPerParcel!=null">
+      {{'cart.EachBox' | translate}} : {{product.QuantityPerBox}}
+    </ion-item>
+
+    <ion-item>
+      {{'product-detail.Couleur' | translate}}: {{product.Color}}
+    </ion-item>
+    <ion-item>{{'product-detail.Taille' | translate}}: {{product.Size}}</ion-item>
+    <ion-item>{{'product-detail.Material' | translate}}: {{product.Material}}</ion-item>
+    <ion-item>{{'product-detail.Forme' | translate}}: {{product.Forme}}</ion-item>
+    <ion-item>
+      <p style="color: black; font-size: 1em;">{{product.Description}} </p>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

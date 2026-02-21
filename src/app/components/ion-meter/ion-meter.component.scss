@@ -1,0 +1,24 @@
+p{
+    height: 30px;
+    line-height: 30px;
+    font-size: 1.2rem;
+    margin: 0px;
+}
+input{
+    width: 100%;
+    height: 100%;
+    font-size: 1.8rem;
+    text-align: center;
+    cursor: pointer;
+    border-width: 0;
+    outline:none;
+    background: var(--ion-card-background);
+}
+.button {
+    height: inherit; 
+    margin: 0; 
+    padding: 0; 
+}
+ion-icon {
+    font-size: 1.6em;
+}

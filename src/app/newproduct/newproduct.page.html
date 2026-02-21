@@ -1,0 +1,137 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{Title}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="PageType=='AdvancedProductSearch'">
+      <ion-button icon-only small (click)="advancedSearchPage()">
+        <ion-icon name="search" class="searchButtonColor"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button icon-only small (click)="toggleLayout()">
+        <ion-icon name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngIf="layoutMode == 'list'">
+    <ion-item button detail="false" (click)="productDetail(item)" *ngFor="let item of productList">
+
+      <ion-avatar slot="start" style="width: 60px;height:60px">
+        <div *ngIf="logined&& utils.formatProductPromotionInfo(item)!=null" class="product-card__badge promotion"
+          style="position: absolute;">
+          {{utils.formatProductPromotionInfo(item).discountPerCent}}%
+        </div>
+        <div *ngIf="item.IsNew" class="product-card__badge_New promotion"
+          style="position: absolute; top: 10px; left: 10px;">
+          {{'home.New' | translate}}
+        </div>
+        <img *ngIf="item.DefaultPhotoPath==null" class="productImg" src="assets/imgs/not-found.png">
+
+        <ion-img *ngIf="item.DefaultPhotoPath!=null" class="productImg" [src]="host+item.DefaultPhotoPath"> </ion-img>
+      </ion-avatar>
+      <ion-label>
+        <!-- <p style="float: right; margin-top: 25px;" *ngIf="logined">{{item.Price}}(HT) <span
+          [hidden]="item.Price==null">€</span></p> -->
+        <p *ngIf="logined && utils.formatProductPromotionInfo(item)!=null"
+          style="text-decoration:line-through;float: right; margin-top: 25px;">
+          {{item.PreviousPrice}} <span [hidden]="item.Price==item.PreviousPrice">€</span>(HT)
+        </p>
+        <p *ngIf="logined" style="font-weight: bold;font-size: 16px;float: right; margin-top: 25px;">{{item.Price}}
+          <span [hidden]="item.Price==null">€</span>(HT)
+        </p>
+        <h2 class="productLabelClass" [id]="item.ReferenceId">{{item.Label}}</h2>
+        <p>{{'newproduct.QuantityEachBox' | translate}} : {{item.QuantityPerBox}}</p>
+        <p>{{'newproduct.QuantityMinimum' | translate}} : {{item.MinQuantity}}</p>
+        <span slot="icon-only" icon-only float-right class="ion-float-right" style="font-size:1em; padding: 1px 0px;"
+          (click)="addInCart($event,item)">
+          <ion-icon name="cart" slot="icon-only"></ion-icon>
+        </span>
+        <p>{{'newproduct.Reference' | translate}} : {{item.Code}}</p>
+
+
+      </ion-label>
+
+    </ion-item>
+  </ion-list>
+
+
+  <ion-row *ngIf="layoutMode == 'column'">
+    <ion-col size="6" (click)="productDetail(item)" *ngFor="let item of productList">
+      <ion-card button="true" class="ion-no-margin productCard">
+        <div class="product-card__badges-list">
+          <div *ngIf="logined&& utils.formatProductPromotionInfo(item)!=null" class="product-card__badge promotion">
+            {{utils.formatProductPromotionInfo(item).discountPerCent}}%
+          </div>
+          <div *ngIf="item.IsNew" class="product-card__badge_New promotion">
+            {{'home.New' | translate}}
+          </div>
+        </div>
+        <ion-img *ngIf="item.DefaultPhotoPath==null" src="assets/imgs/not-found.png" style="height: 20vh;"> </ion-img>
+        <img *ngIf="item.DefaultPhotoPath!=null" [src]="host+item.DefaultPhotoPath" style="height: 20vh;">
+        <ion-button (click)="addInCart($event,item)" expand="full" size="small">
+          <ion-icon slot="start" name="cart"></ion-icon>{{'Add' | translate}}
+        </ion-button>
+        <ion-card-header class="ion-padding" style="padding-bottom: 0px;">
+          <ion-card-title style="font-size:16px;">{{item.Label}}</ion-card-title>
+          <ion-card-subtitle>{{'newproduct.Reference' | translate}} : {{item.Code}}</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="item.QuantityPerParcel==null">{{'cart.QuantityPerParcel' | translate}} :
+            {{item.QuantityPerBox}}</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="item.QuantityPerParcel!=null">{{'cart.QuantityPerParcel' | translate}} :
+            {{item.QuantityPerParcel}}</ion-card-subtitle>
+          <ion-card-subtitle *ngIf="item.QuantityPerParcel!=null">{{'cart.EachBox' | translate}} :
+            {{item.QuantityPerBox}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content style="padding-bottom: 5px;" class="productCardContent">
+
+          <p *ngIf="logined && utils.formatProductPromotionInfo(item)!=null" style="text-decoration:line-through;">
+            {{item.PreviousPrice}} <span [hidden]="item.Price==item.PreviousPrice">€</span>(HT)
+          </p>
+          <p *ngIf="logined" style="font-weight: bold;font-size: 16px;">{{item.Price}} <span
+              [hidden]="item.Price==null">€</span>(HT)
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="layoutMode == 'imangeOnly'">
+    <ion-searchbar [formControl]="searchControl" *ngIf="PageType == 'ViewAllProduct'"></ion-searchbar>
+    <ion-row>
+      <ion-col size="4" (click)="productDetail(item)" *ngFor="let item of productList" style="padding: 0 2px;">
+        <div style="text-align: center;">
+          <div class="product-card__badges-list">
+            <div *ngIf="logined&& utils.formatProductPromotionInfo(item)!=null" class="product-card__badge promotion">
+              {{utils.formatProductPromotionInfo(item).discountPerCent}}%
+            </div>
+            <div *ngIf="item.IsNew" class="product-card__badge_New promotion">
+              {{'home.New' | translate}}
+            </div>
+          </div>
+          <ion-img *ngIf="item.DefaultPhotoPath==null" src="assets/imgs/not-found.png" style="height: 16vh;"> </ion-img>
+          <img *ngIf="item.DefaultPhotoPath!=null" [src]="host+item.DefaultPhotoPath" style="height: 16vh;">
+
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div *ngIf="loading" class="ion-text-center spinner ion-margin-top">
+    <ion-spinner></ion-spinner>
+    <p class="ion-text-center" text-center font-size-small>{{'Loading' | translate}}...</p>
+  </div>
+
+  <p *ngIf="!loading && (productList==null || productList.length<=0) " class="ion-text-center">
+    {{'NoDataToDisplay' | translate}}</p>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

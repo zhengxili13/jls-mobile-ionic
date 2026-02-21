@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'contact-us.Title' | translate}}</ion-title>
+    <ion-buttons slot='end' *ngIf="isSystemMessage==false">
+      <ion-button (click)='save()'>{{'contact-us.Submit' | translate}}</ion-button>
+    </ion-buttons>
+    <ion-buttons  *ngIf="isSystemMessage==true">
+    <ion-button  (click)="dismiss()" >
+      <span color="primary" showWhen="ios">{{'signin.Return' | translate}}</span>
+      <ion-icon name="md-close" showWhen="android"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="none">  
+    <ion-item *ngIf="isSystemMessage == false">
+      <h1 *ngIf="criteria.OrderId==null  &&isSystemMessage == false">{{'contact-us.OpinionAndAdvice' | translate}}</h1>
+      <h1 *ngIf="criteria.OrderId!=null  &&isSystemMessage == false">{{'contact-us.Question' | translate}}</h1>
+    </ion-item>
+    <ion-item>
+      <div class="alert alert-success ion-no-margin ion-no-padding" role="alert" style="width: 100%; padding-top:0px; padding-bottom: 0px;">
+        <p>Tel {{phone}}</p>
+        <p>Fax {{fax}}</p>
+        <p>Email: {{email}}</p>
+        <p>{{address}}</p>
+        <p>www.jlsimport.fr</p>
+      </div>
+    </ion-item>
+
+    <ion-item  *ngIf="criteria.OrderId==null &&isSystemMessage == false">
+      <ion-textarea 
+      rows="5"
+      readonly="true" 
+      style="background-color:#9794a7; padding-left: 10px;" 
+      class="inputZoom"
+      value="{{'contact-us.GiveUsYourAdvice' | translate}}"
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-item style="margin-bottom:25px;">
+      <ion-label style="margin-bottom: 10px;font-size: 18px;" position="stacked">{{'contact-us.Subject' | translate}}:</ion-label>
+      <ion-input [(ngModel)]="criteria.Title" class="inputZoom" [readonly]="isSystemMessage == true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label style="margin-bottom: 10px;font-size: 18px;" position="stacked">{{'contact-us.Message' | translate}}</ion-label>
+      <ion-textarea rows="8" class="inputZoom"  [(ngModel)]="criteria.Body" [readonly]="isSystemMessage == true"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

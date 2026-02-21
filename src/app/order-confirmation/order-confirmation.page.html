@@ -1,0 +1,147 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">{{'signin.Return' | translate}}</span>
+        <ion-icon name="md-close" showWhen="android"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{'order-confirmation.Title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" padding style="background-color: #fffffff7!important;">
+  <div style="background-color: white; padding: 8px;">
+    <h6>{{'order-confirmation.MyOrder' | translate}}<span float-right
+        class="articleNumber ion-float-right">{{orderProductList.length}}
+        {{'order-confirmation.Article' | translate}}</span></h6>
+    <ion-list style="margin-bottom: 0px;">
+      <ion-card class="productCard" *ngFor="let item of orderProductList">
+        <ion-card-header style="padding: 8px 4px 0px;">
+          <h6 class="productTitle ion-padding-no ion-margin-no">{{item.Label}}</h6>
+        </ion-card-header>
+        <ion-card-content style="padding: 0px;">
+          <div>
+            <ion-row>
+              <ion-col size="4" col-4>
+                <img *ngIf="item.DefaultPhotoPath==null" class="productImg" src="assets/imgs/not-found.png">
+                <img *ngIf="item.DefaultPhotoPath!=null" class="productImg" [src]="host+item.DefaultPhotoPath">
+              </ion-col>
+              <ion-col size="8" col-8>
+                <div class="ion-float-right" style="margin-top: 5px;"> <span
+                    style="font-size: 20px;color: #534d7a; ">{{item.Price*item.Quantity*item.QuantityPerBox | number :
+                    '1.2-2'}}
+                    €</span>
+                </div>
+                <p class="descriptionFont">{{'order-confirmation.Reference' | translate}}: {{item.Code}} </p>
+                <p class="descriptionFont">{{'cart.EachBox' | translate}} : {{item.QuantityPerBox}}</p>
+                <p class="descriptionFont">{{'order-confirmation.UnitPrice' | translate}} : {{item.Price}} €(HT)</p>
+                <p class="descriptionFont">x {{item.Quantity}}</p>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <div>
+        <p class="expenseFont">{{'order-confirmation.SommeBeforeTaxe' | translate}}:<span
+            class="ion-float-right">{{calculTotalPrice() | number : '1.2-2'}}€</span></p>
+
+        <p class="expenseFont">{{'read-order-details.TxTVA' | translate}}:<span class="ion-float-right"
+            float-right>{{TaxRate}}% </span> </p>
+        <p class="expenseFont">{{'order-confirmation.TVA' | translate}}:<span float-right class="ion-float-right">
+            {{calculTotalPrice()*TaxRate*0.01 | number : '1.2-2'}} €</span> </p>
+        <P class="expenseFont">{{'order-confirmation.ShippingCost' | translate}}:<span float-right
+            class="ion-float-right">{{'order-confirmation.AEstimer' | translate}}</span></P>
+        <p class="totalCommande expenseFont" style="font-weight: bold;">
+          {{'order-confirmation.AmountOfOrder' | translate}}:<span class="ion-float-right"
+            float-right>{{(1+TaxRate*0.01) *calculTotalPrice() | number : '1.2-2'}}€</span></p>
+      </div>
+    </ion-list>
+  </div>
+  <div class="alert alert-success" role="alert" style="margin-bottom: 0;" [innerHTML]="ShippingMessage">
+  </div>
+
+  <div style="background-color: white; padding: 8px;">
+    <h6><b>{{'order-confirmation.ShippingAddressOrBilling' | translate}}</b></h6>
+    <ion-list style="margin-bottom: 0px;">
+      <ion-card class="productCard ion-margin-horizontal" style="width: 100%; border-bottom: 0px;">
+        <ion-card-header style="padding: 8px 4px 0px;">
+          <h6 class="productTitle">{{'order-confirmation.ShippingAddress' | translate}}</h6>
+        </ion-card-header>
+        <ion-card-content style="padding: 0px;" *ngIf="defaultShippingAdress">
+          <!-- <p class="">{{defaultShippingAdress.ContactFirstName}} <span>
+              {{defaultShippingAdress.ContactLastName}}</span> </p> -->
+              <div >
+                <ion-checkbox style="--size:1rem;" [(ngModel)]="setSameAddress">
+                </ion-checkbox>
+                <ion-label style="margin-left: 3px;">{{'order-confirmation.SameAddress' | translate}}</ion-label>
+              </div>
+          <p class="">{{entrepriseName}} </p>
+          <p class="">{{defaultShippingAdress.FirstLineAddress}} </p>
+          <p class="">{{defaultShippingAdress.SecondLineAddress}} </p>
+          <p class="">{{defaultShippingAdress.ZipCode}} <span> {{ defaultShippingAdress.City }} </span> <span>
+              {{ defaultShippingAdress.Country }} </span>
+          </p>
+          <p class="">{{defaultShippingAdress.ContactTelephone}} </p>
+        </ion-card-content>
+        <ion-card-content style="padding-left: 8px;" *ngIf="defaultShippingAdress==null">
+          <p class=" ion-text-center">{{'NoDataToDisplay' | translate}}</p>
+        </ion-card-content>
+      </ion-card>
+      <div class="ion-text-center">
+        <ion-button size="small" color="primary" Fill="outline" outline (click)="selectShippingAdress()"
+          *ngIf="defaultShippingAdress!=null">{{'order-confirmation.ChooseAnotherAddress' | translate}}</ion-button>
+        <ion-button ion-button size="small" Fill="outline" small color="primary" outline
+          (click)="selectShippingAdress()" *ngIf="defaultShippingAdress==null">{{'Add' | translate}}</ion-button>
+      </div>
+    </ion-list>
+  </div>
+
+  <div style="background-color: white; padding: 8px; padding-top: 4px;" *ngIf="!setSameAddress">
+    <ion-card class="productCard " style="width: 100%; border-bottom: 0px;">
+      <ion-card-header style="padding: 8px 4px 0px;">
+        <span> <a class="ion-float-right articleNumber" style="margin-right: 5px;margin-top: 3px;"
+            (click)="modifyFacturationAdress()">{{'order-confirmation.Edit' | translate}}</a></span>
+        <h6 class="productTitle" style="margin-top: 0px;">{{'order-confirmation.BillingAddress' | translate}}</h6>
+      </ion-card-header>
+      <ion-card-content style="padding: 0px;" *ngIf="facturationAdress">
+        <!-- <p class="">{{facturationAdress.ContactFirstName}} <span>
+            {{facturationAdress.ContactLastName}}</span> </p> -->
+        <p class="">{{entrepriseName}} </p>
+        <p class="">{{facturationAdress.FirstLineAddress}} </p>
+        <p class="">{{facturationAdress.SecondLineAddress}} </p>
+        <p class="">{{facturationAdress.ZipCode}} <span> {{ facturationAdress.City }} </span> </p> <span>
+          {{ facturationAdress.Country }} </span>
+        <p class="">{{facturationAdress.ContactTelephone}} </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+  <div style="background-color: white; padding: 8px; ">
+    <ion-card class="productCard" style="width: 100%; border-bottom: 0px;">
+      <ion-card-header style="padding: 8px 4px 0px;">
+        <h6 class="productTitle">{{'order-confirmation.ClientRemark' | translate}}</h6>
+      </ion-card-header>
+      <ion-card-content style="padding: 0px;">
+        <ion-textarea rows="3" [(ngModel)]="remark" class="inputZoom"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar style="padding-bottom: 0px;">
+    <div style="padding: 5px;">
+      <p class="expenseFont">{{'order-confirmation.Amount' | translate}}:<span class="ion-float-right" float-right
+          style="font-weight: bold;">{{(1+TaxRate*0.01) *calculTotalPrice() | number : '1.2-2'}}€</span></p>
+      <p class="expenseFont">{{'order-confirmation.ShippingCost' | translate}}:<span
+          class="ion-float-right">{{'order-confirmation.AEstimer' | translate}}</span></p>
+      <div text-center>
+        <ion-button size="small" color="primary" style="width: 100%;" (click)="validOrder()">
+          {{'order-confirmation.FinalizeTheOrder' | translate}}</ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

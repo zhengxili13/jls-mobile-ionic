@@ -1,0 +1,7 @@
+android:
+sudo ionic cordova prepare android --prod
+sudo appcenter codepush release-cordova -a jlsimport.apple-gmail.com/JLS-MOBILE-ANDROID -d Production -m
+
+ios:
+sudo ionic cordova prepare ios --prod
+sudo appcenter codepush release-cordova -a jlsimport.apple-gmail.com/JLS-MOBILE-IOS -d Production -m

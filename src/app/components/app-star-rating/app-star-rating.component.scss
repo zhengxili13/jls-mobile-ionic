@@ -1,0 +1,10 @@
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  ion-icon {
+    margin-right: 2px;
+    &.clickable {
+      cursor: pointer;
+    }
+  }
+}
