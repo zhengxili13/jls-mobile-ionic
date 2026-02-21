@@ -24,6 +24,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
 import { TranslationPageModule } from './translation/translation.module';
 import { JwtInterceptor } from './service/JwtInterceptor';
+import { CorsProxyInterceptor } from './service/cors-proxy.interceptor';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -65,6 +66,7 @@ export function LanguageLoader(http: HttpClient) {
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: CorsProxyInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     UtilsService,
     RestService,

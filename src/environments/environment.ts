@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   SERVER_API_URL: 'https://www.jlsimport.fr/', // https://localhost:44304/ http://localhost/JLSMobileApplication/
   HTTP_WAITING_TIME: 30000, // ms
+  /** CORS proxy for static hosting. Leave empty when backend allows your origin. */
+  CORS_PROXY: '',
 };
 
 /*
