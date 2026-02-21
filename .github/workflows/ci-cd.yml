@@ -1,9 +1,8 @@
-name: CD
+name: CI / CD
 
 on:
   push:
-    branches:
-      - main
+  pull_request:
 
 permissions:
   contents: read
@@ -15,8 +14,42 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Deploy to GitHub Pages
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Upload build artifact (for inspection)
+        uses: actions/upload-artifact@v4
+        with:
+          name: www-${{ github.sha }}
+          path: www/
+          retention-days: 3
+
+  cd:
+    name: CD
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
