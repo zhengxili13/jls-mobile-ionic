@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">jlsimport</string>
+    <string name="title_activity_main">jlsimport</string>
+    <string name="package_name">jlsimport.app</string>
+    <string name="custom_url_scheme">jlsimport.app</string>
+</resources>

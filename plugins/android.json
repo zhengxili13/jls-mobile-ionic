@@ -1,0 +1,24 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-nativestorage": {
+      "PACKAGE_NAME": "io.ionic.jlsimport.prod"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "io.ionic.jlsimport.prod"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.ionic.jlsimport.prod"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "io.ionic.jlsimport.prod"
+    }
+  },
+  "dependent_plugins": {}
+}

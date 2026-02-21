@@ -1,33 +1,80 @@
-# Specifies intentionally untracked files to ignore when using Git
-# http://git-scm.com/docs/gitignore
+# Ionic / Angular
+.angular/
+.nx/
 
-*~
-*.sw[mnpcod]
-.tmp
-*.tmp
-*.tmp.*
-*.sublime-project
-*.sublime-workspace
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+www/
+.sass-cache/
+connect.lock/
+coverage/
+.tmp/
+out-tsc/
+
+# Environment files (if containing secrets)
+# src/environments/environment.prod.ts  # 取消注释如果包含敏感信息
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+android/app/google-services.json     # 取消注释如果通过 CI secret 注入
+android/.idea/
+android/captures/
+
+# iOS
+ios/App/Pods/
+ios/App/App.xcworkspace/xcuserdata/
+ios/DerivedData/
+ios/.xcode.env.local
+ios/App/build/
+ios/App/App.xcodeproj/xcuserdata/
+ios/App/GoogleService-Info.plist     # 取消注释如果通过 CI secret 注入
+
+# Capacitor
+.capacitor/
+
+# System files
 .DS_Store
 Thumbs.db
-UserInterfaceState.xcuserstate
-$RECYCLE.BIN/
+Desktop.ini
 
+# Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
 *.log
-log.txt
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-/.idea
-/.ionic
-/.sass-cache
-/.sourcemaps
-/.versions
-/.vscode
+# Runtime
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
 /coverage
-/dist
-/node_modules
-/platforms
-/plugins
-/www
-.angular
-android
+.nyc_output/
+e2e/
+
+# Misc
+*.zip
+*.tar.gz
+.env
+.env.local
+.env.*.local
