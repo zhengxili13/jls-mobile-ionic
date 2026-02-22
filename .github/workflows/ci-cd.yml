@@ -161,4 +161,4 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
           packageName: jlsimport.app
           releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
-          track: internal
+          track: alpha
