@@ -124,8 +124,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION_NAME=$(node -p "require('./package.json').version")
-          # Use github.run_number to ensure versionCode always increases
-          VERSION_CODE=${{ github.run_number }}
+          # Use github.run_number with an offset to avoid version code collision with manual uploads
+          VERSION_CODE=$(( ${{ github.run_number }} + 10 ))
           FULL_VERSION="${VERSION_NAME}(${VERSION_CODE})"
           
           # 1. Update Android Gradle files
