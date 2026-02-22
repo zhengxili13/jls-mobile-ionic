@@ -8,6 +8,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: pages
@@ -87,3 +88,77 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4
+
+  deploy-android:
+    name: Build & Deploy Android
+    needs: cd
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Web App
+        run: npm run build -- --configuration=production
+
+      - name: Capacitor Sync
+        run: npx cap sync android
+
+      - name: Set Android Versioning, Title & Version File
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION_NAME=$(node -p "require('./package.json').version")
+          # Use github.run_number to ensure versionCode always increases
+          VERSION_CODE=${{ github.run_number }}
+          FULL_VERSION="${VERSION_NAME}(${VERSION_CODE})"
+          
+          # 1. Update Android Gradle files
+          sed -i "s/versionCode [0-9]*/versionCode $VERSION_CODE/" android/app/build.gradle
+          sed -i "s/versionName \".*\"/versionName \"$VERSION_NAME\"/" android/app/build.gradle
+          echo "Building version $FULL_VERSION"
+
+          # 2. Create version file
+          echo "Build Version: $FULL_VERSION" > "${FULL_VERSION}.txt"
+
+          # 3. Update Workflow Run Title (requires actions: write permission)
+          gh run edit ${{ github.run_id }} --name "build and publish google play ${FULL_VERSION}" || echo "Could not update run title"
+
+      - name: Build Android App Bundle
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew bundleRelease
+
+      - name: Sign AAB
+        id: sign_aab
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: android/app/build/outputs/bundle/release/
+          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonKeyData: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
+          packageName: jlsimport.app
+          releaseFiles: android/app/build/outputs/bundle/release/app-release-signed.aab
+          track: internal
