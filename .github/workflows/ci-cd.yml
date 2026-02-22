@@ -158,7 +158,7 @@ jobs:
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonKeyData: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
+          serviceAccountJsonPlainText: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
           packageName: jlsimport.app
-          releaseFiles: android/app/build/outputs/bundle/release/app-release-signed.aab
+          releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
           track: internal
