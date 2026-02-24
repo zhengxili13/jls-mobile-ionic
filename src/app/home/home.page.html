@@ -16,12 +16,12 @@
 </ion-header>
 
 <ion-content class="ion-text-center" no-bounce scrollY="true">
-  <swiper *ngIf="sldes!=null &&sldes.length>0">
-    <ng-template swiperSlide *ngFor="let item of sldes">
+  <swiper *ngIf="slides!=null &&slides.length>0">
+    <ng-template swiperSlide *ngFor="let item of slides">
       <img [src]="host+item.PhotoPath" />
     </ng-template>
   </swiper>
-  <swiper *ngIf="!(sldes!=null&&sldes.length>0)">
+  <swiper *ngIf="!(slides!=null&&slides.length>0)">
     <ng-template swiperSlide class="slidePhoto">
       <img src="../../assets/imgs/slider2.jpg" />
     </ng-template>
