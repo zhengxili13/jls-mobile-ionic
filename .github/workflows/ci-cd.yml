@@ -162,3 +162,82 @@ jobs:
           packageName: jlsimport.app
           releaseFiles: ${{ steps.sign_aab.outputs.signedReleaseFile }}
           track: alpha
+
+  deploy-ios:
+    name: Build & Deploy iOS
+    needs: cd
+    runs-on: macos-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Web App
+        run: npm run build -- --configuration=production
+
+      - name: Capacitor Sync
+        run: npx cap sync ios
+
+      - name: Set iOS Versioning
+        run: |
+          VERSION_NAME=$(node -p "require('./package.json').version")
+          VERSION_CODE=$(( ${{ github.run_number }} + 10 ))
+          cd ios/App
+          # Ensure agvtool is working
+          xcrun agvtool new-marketing-version $VERSION_NAME
+          xcrun agvtool new-version -all $VERSION_CODE
+
+      - name: Import Code Signing Certificates
+        uses: apple-actions/import-codesigning-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.IOS_P12_BASE64 }}
+          p12-password: ${{ secrets.IOS_P12_PASSWORD }}
+
+      - name: Install Provisioning Profile
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "${{ secrets.IOS_PROVISION_PROFILE_BASE64 }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
+
+      - name: Create ExportOptions.plist
+        run: |
+          cat <<EOF > ios/App/App/ExportOptions.plist
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>teamID</key>
+            <string>${{ secrets.APPLE_TEAM_ID }}</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>jlsimport.app</key>
+              <string>App Store Distribution Profile</string>
+            </dict>
+          </dict>
+          </plist>
+          EOF
+
+      - name: Build IPA
+        run: |
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -configuration Release -archivePath ios/App/App.xcarchive archive
+          xcodebuild -exportArchive -archivePath ios/App/App.xcarchive -exportOptionsPlist ios/App/App/ExportOptions.plist -exportPath ios/App/build
+
+      - name: Upload to App Store Connect
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: ios/App/build/App.ipa
+          issuer-id: ${{ secrets.APPLE_APP_STORE_CONNECT_API_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPLE_APP_STORE_CONNECT_API_KEY_ID }}
+          api-key-content: ${{ secrets.APPLE_APP_STORE_CONNECT_API_KEY }}
