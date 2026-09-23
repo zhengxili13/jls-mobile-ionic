@@ -125,7 +125,8 @@ jobs:
         run: |
           VERSION_NAME=$(node -p "require('./package.json').version")
           # Use github.run_number with an offset to avoid version code collision with manual uploads
-          VERSION_CODE=$(( ${{ github.run_number }} + 10 ))
+          # Offset is set to 10600 to ensure version code > 10577
+          VERSION_CODE=$(( ${{ github.run_number }} + 10600 ))
           FULL_VERSION="${VERSION_NAME}(${VERSION_CODE})"
           
           # 1. Update Android Gradle files
@@ -190,7 +191,8 @@ jobs:
       - name: Set iOS Versioning
         run: |
           VERSION_NAME=$(node -p "require('./package.json').version")
-          VERSION_CODE=$(( ${{ github.run_number }} + 10 ))
+          # Offset is set to 10600 to ensure version code > 10577
+          VERSION_CODE=$(( ${{ github.run_number }} + 10600 ))
           cd ios/App
           # Ensure agvtool is working
           xcrun agvtool new-marketing-version $VERSION_NAME
